@@ -1,4 +1,4 @@
-function CardScreen (): JSX.Element {
+function CardComponent (): JSX.Element {
   return (
     <article className="cities__place-card place-card">
       <div className="cities__image-wrapper place-card__image-wrapper">
@@ -43,4 +43,4 @@ function CardScreen (): JSX.Element {
   );
 }
 
-export default CardScreen;
+export default CardComponent;
