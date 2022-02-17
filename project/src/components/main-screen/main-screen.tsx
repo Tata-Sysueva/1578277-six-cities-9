@@ -39,11 +39,7 @@ function MainScreen({offersCount}: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {CardComponent()}
-                {CardComponent()}
-                {CardComponent()}
-                {CardComponent()}
-                {CardComponent()}
+                {[1, 2, 3, 4, 5, 6].map((id) => <CardComponent key={id}/>)}
               </div>
             </section>
             <div className="cities__right-section">
