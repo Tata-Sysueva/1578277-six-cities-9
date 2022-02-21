@@ -1,8 +1,8 @@
 import Header from '../../components/header/header';
 import Review from '../../components/review/review';
-import PremiumMark from "../../components/premium-mark/premium-mark";
-import Map from "../../components/map/map";
-import ButtonBookmark from "../../components/button-bookmark/button-bookmark";
+import PremiumMark from '../../components/premium-mark/premium-mark';
+import Map from '../../components/map/map';
+import ButtonBookmark from '../../components/button-bookmark/button-bookmark';
 
 function Offer(): JSX.Element {
   return (
