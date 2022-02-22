@@ -1,4 +1,6 @@
 import ButtonBookmark from '../button-bookmark/button-bookmark';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
 
 function Card (): JSX.Element {
   return (
@@ -26,13 +28,16 @@ function Card (): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '80 %'}}>
-            </span>
+            <span style={{width: '80 %'}} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="/#">Beautiful &amp; luxurious apartment at great location</a>
+          <Link
+            to={AppRoute.Room}
+          >
+            Beautiful &amp; luxurious apartment at great location
+          </Link>
         </h2>
         <p className="place-card__type">Apartment</p>
       </div>

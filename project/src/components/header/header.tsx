@@ -1,4 +1,6 @@
 import UserLogged from '../user-logged/user-logged';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
 
 function Header (): JSX.Element {
   return (
@@ -6,7 +8,10 @@ function Header (): JSX.Element {
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
-            <a className="header__logo-link" href="main.html">
+            <Link
+              className="header__logo-link"
+              to={AppRoute.Main}
+            >
               <img
                 className="header__logo"
                 src="img/logo.svg"
@@ -14,7 +19,7 @@ function Header (): JSX.Element {
                 width="81"
                 height="41"
               />
-            </a>
+            </Link>
           </div>
 
           <UserLogged />
