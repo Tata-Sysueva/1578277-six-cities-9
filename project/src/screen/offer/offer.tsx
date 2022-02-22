@@ -1,8 +1,10 @@
 import Header from '../../components/header/header';
 import Review from '../../components/review/review';
-import PremiumMark from "../../components/premium-mark/premium-mark";
-import Map from "../../components/map/map";
-import ButtonBookmark from "../../components/button-bookmark/button-bookmark";
+import PremiumMark from '../../components/premium-mark/premium-mark';
+import Map from '../../components/map/map';
+import ButtonBookmark from '../../components/button-bookmark/button-bookmark';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
 
 function Offer(): JSX.Element {
   return (
@@ -194,7 +196,9 @@ function Offer(): JSX.Element {
                     </div>
                   </li>
                 </ul>
-                {Review()}
+
+                <Review />
+
               </section>
             </div>
           </div>
@@ -208,7 +212,7 @@ function Offer(): JSX.Element {
             <div className="near-places__list places__list">
               <article className="near-places__card place-card">
                 <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <a href="#">
+                  <a href="/#">
                     <img
                       className="place-card__image"
                       src="img/room.jpg"
@@ -230,12 +234,16 @@ function Offer(): JSX.Element {
                   </div>
                   <div className="place-card__rating rating">
                     <div className="place-card__stars rating__stars">
-                      <span style={{width: '80 %'}}></span>
+                      <span style={{width: '80 %'}} />
                       <span className="visually-hidden">Rating</span>
                     </div>
                   </div>
                   <h2 className="place-card__name">
-                    <a href="#">Wood and stone place</a>
+                    <Link
+                      to={AppRoute.Room}
+                    >
+                      Wood and stone place
+                    </Link>
                   </h2>
                   <p className="place-card__type">Private room</p>
                 </div>
@@ -243,7 +251,7 @@ function Offer(): JSX.Element {
 
               <article className="near-places__card place-card">
                 <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <a href="#">
+                  <a href="/#">
                     <img
                       className="place-card__image"
                       src="img/apartment-02.jpg"
@@ -273,7 +281,11 @@ function Offer(): JSX.Element {
                     </div>
                   </div>
                   <h2 className="place-card__name">
-                    <a href="#">Canal View Prinsengracht</a>
+                    <Link
+                      to={AppRoute.Room}
+                    >
+                      Canal View Prinsengracht
+                    </Link>
                   </h2>
                   <p className="place-card__type">Apartment</p>
                 </div>
@@ -284,7 +296,7 @@ function Offer(): JSX.Element {
                   <span>Premium</span>
                 </div>
                 <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <a href="#">
+                  <a href="/#">
                     <img
                       className="place-card__image"
                       src="img/apartment-03.jpg"
@@ -314,7 +326,11 @@ function Offer(): JSX.Element {
                     </div>
                   </div>
                   <h2 className="place-card__name">
-                    <a href="#">Nice, cozy, warm big bed apartment</a>
+                    <Link
+                      to={AppRoute.Room}
+                    >
+                      Nice, cozy, warm big bed apartment
+                    </Link>
                   </h2>
                   <p className="place-card__type">Apartment</p>
                 </div>
