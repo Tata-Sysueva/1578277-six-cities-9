@@ -1,9 +1,33 @@
 import Card from '../card/card';
+import {Offer} from '../../types/offer';
+import {useState} from 'react';
 
-function CardList (): JSX.Element {
+type CardListProps = {
+  offers: Offer[];
+}
+
+function CardList ({offers}: CardListProps): JSX.Element {
+  const [offersId, setOffersId] = useState(0);
+
+  const boxMouseEnterHandler = (newId: number) => {
+    setOffersId((prevId) => {
+      prevId = newId;
+      return prevId;
+    })
+  }
+
   return (
     <div className="cities__places-list places__list tabs__content">
-      {Array.from({length: 6},(_, id) => <Card key={id} />)}
+      {
+        offers.map((offer: Offer) =>
+          <Card
+            key={offer.id}
+            offer={offer}
+            className="cities__place-card"
+            boxMouseEnterHandler={boxMouseEnterHandler}
+          />
+        )
+      }
     </div>
   );
 }

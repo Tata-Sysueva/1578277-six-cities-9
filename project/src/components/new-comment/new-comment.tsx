@@ -1,4 +1,4 @@
-function Review (): JSX.Element {
+function NewComment (): JSX.Element {
   return (
     <form className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
@@ -116,4 +116,4 @@ function Review (): JSX.Element {
   );
 }
 
-export default Review;
+export default NewComment;

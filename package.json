@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "pluralize": "^8.0.0"
+  }
+}
