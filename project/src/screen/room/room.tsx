@@ -9,6 +9,9 @@ import Comment from '../../components/comment/comment';
 import {useParams} from 'react-router-dom';
 import {AuthorizationStatus} from '../../const';
 import {getRatingPercent} from '../../utils/utils';
+import RoomGallery from '../../components/room-gallery/room-gallery';
+import pluralize from 'pluralize';
+
 
 type RoomProps = {
   offers: Offer[];
@@ -19,9 +22,8 @@ function Room({offers, reviews}: RoomProps ): JSX.Element {
   const params = useParams();
   const paramsId = params.id;
   const cardId = Number(paramsId);
-  const offer = offers.filter((offer) => offer.id === cardId);
-  const [ offerInfo ] = offer;
-
+  const curOffer = offers.filter((offer) => offer.id === cardId);
+  const [ offerInfo ] = curOffer;
 
   const {
     title,
@@ -34,6 +36,7 @@ function Room({offers, reviews}: RoomProps ): JSX.Element {
     type,
     host,
     isPremium,
+    images,
   } = offerInfo;
 
   const {
@@ -48,55 +51,11 @@ function Room({offers, reviews}: RoomProps ): JSX.Element {
 
       <main className="page__main page__main--property">
         <section className="property">
-          <div className="property__gallery-container container">
-            <div className="property__gallery">
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/room.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/apartment-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/apartment-02.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/apartment-03.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/studio-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/apartment-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-            </div>
-          </div>
+
+          <RoomGallery imagesSrc={images}/>
           <div className="property__container container">
             <div className="property__wrapper">
-              {isPremium && <PremiumMark />}
+              {isPremium && <PremiumMark isProperty/>}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
                   {title}
@@ -120,7 +79,7 @@ function Room({offers, reviews}: RoomProps ): JSX.Element {
                   {type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {bedrooms} Bedrooms
+                  {bedrooms} {pluralize('Bedroom', bedrooms)}
                 </li>
                 <li className="property__feature property__feature--adults">
                   Max {maxAdults} adults
@@ -143,7 +102,7 @@ function Room({offers, reviews}: RoomProps ): JSX.Element {
                     className={`
                       property__avatar-wrapper
                       user__avatar-wrapper
-                      ${isPremium ? 'property__avatar-wrapper--pro' : ''}
+                      ${isPremium && 'property__avatar-wrapper--pro'}
                     `}
                   >
                     <img
@@ -157,11 +116,10 @@ function Room({offers, reviews}: RoomProps ): JSX.Element {
                   <span className="property__user-name">
                     {name}
                   </span>
-                  {!isPremium ? '' :
+                  {isPremium &&
                     <span className="property__user-status">
                       Pro
-                    </span>
-                  }
+                    </span>}
                 </div>
                 <div className="property__description">
                   <p className="property__text">
@@ -175,7 +133,7 @@ function Room({offers, reviews}: RoomProps ): JSX.Element {
                   {reviews.map((review) => <Comment key={review.id} review={review}/>)}
                 </ul>
 
-                {AuthorizationStatus.Auth ? <NewComment /> : ''}
+                {AuthorizationStatus.Auth && <NewComment /> }
 
               </section>
             </div>

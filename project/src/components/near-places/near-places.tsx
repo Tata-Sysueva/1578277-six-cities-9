@@ -15,13 +15,14 @@ export default function NearPlaces ({offers}: NearPlacesProps):JSX.Element {
           {
             offers
               .slice(OFFERS_FROM,OFFERS_TO)
-              .map((offer: Offer) =>
+              .map((offer: Offer) => (
                 <Card
                   key={offer.id}
                   offer={offer}
                   className="near-places__card"
                 />
-            )
+              ),
+              )
           }
         </div>
       </section>

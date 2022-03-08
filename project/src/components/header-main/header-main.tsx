@@ -6,7 +6,7 @@ function HeaderMain (): JSX.Element {
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
-            <a className="header__logo-link header__logo-link--active">
+            <a className="header__logo-link header__logo-link--active" href="/#">
               <img
                 className="header__logo"
                 src="img/logo.svg"

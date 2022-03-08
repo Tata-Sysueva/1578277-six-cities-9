@@ -1,27 +1,8 @@
 import {Offer} from '../types/offer';
 
-// const DETAILS = [
-//   'Apartment',
-//   '3 Bedrooms',
-//   'Max 4 adults',
-// ];
-//
-// const FEATURES = [
-//   'Wi-Fi',
-//   'Washing machine',
-//   'Towels',
-//   'Heating',
-//   'Coffee machine',
-//   'Baby seat',
-//   'Kitchen',
-//   'Dishwasher',
-//   'Cabel TV',
-//   'Fridge',
-// ];
-
 export const offers: Offer[]  = [
   {
-    bedrooms: 5,
+    bedrooms: 1,
     city: {
       location: {
         latitude: 52.370216,
@@ -46,6 +27,10 @@ export const offers: Offer[]  = [
     id: 1,
     images: [
       'img/apartment-01.jpg',
+      'img/apartment-02.jpg',
+      'img/apartment-03.jpg',
+      'img/studio-01.jpg',
+      'img/room.jpg',
     ],
     isFavorite: true,
     isPremium: true,
@@ -97,7 +82,7 @@ export const offers: Offer[]  = [
     price: 100,
     rating: 3.8,
     title: 'Wood and stone place',
-    type: 'apartment',
+    type: 'Apartment',
   },
   {
     bedrooms: 3,
@@ -134,7 +119,7 @@ export const offers: Offer[]  = [
     previewImage: 'img/5.png',
     price: 20,
     rating: 1.8,
-    title: 'Beautiful & luxurious studio at great location',
+    title: 'Beautiful location',
     type: 'apartment',
   },
   {

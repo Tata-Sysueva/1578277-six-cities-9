@@ -7,27 +7,22 @@ type CardListProps = {
 }
 
 function CardList ({offers}: CardListProps): JSX.Element {
-  const [offersId, setOffersId] = useState(0);
+  const [, setOffersId] = useState(0);
 
-  const boxMouseEnterHandler = (newId: number) => {
-    setOffersId((prevId) => {
-      prevId = newId;
-      return prevId;
-    })
-  }
+  const handleMouseEnter = (newId: number) => setOffersId(newId);
 
   return (
     <div className="cities__places-list places__list tabs__content">
       {
-        offers.map((offer: Offer) =>
+        offers.map((offer: Offer) => (
           <Card
             key={offer.id}
             offer={offer}
             className="cities__place-card"
-            boxMouseEnterHandler={boxMouseEnterHandler}
+            onCardHover={handleMouseEnter}
           />
-        )
-      }
+        ))
+      };
     </div>
   );
 }

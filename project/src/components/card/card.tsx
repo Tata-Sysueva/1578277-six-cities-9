@@ -3,14 +3,27 @@ import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {Offer} from '../../types/offer';
 import {getRatingPercent} from '../../utils/utils';
+import PremiumMark from '../premium-mark/premium-mark';
 
 type CardProps = {
   offer: Offer;
   className: string;
-  boxMouseEnterHandler?: any;
+  onCardHover?: (id: number) => void;
+  classNameWrap?:string,
+  classNameInfo?:string,
+  isSmall?:boolean,
 }
 
-function Card ({offer, className, boxMouseEnterHandler=''}: CardProps): JSX.Element {
+function Card (
+  {
+    offer,
+    className,
+    onCardHover,
+    classNameWrap='',
+    classNameInfo='',
+    isSmall,
+  }: CardProps): JSX.Element {
+
   const {
     id,
     title,
@@ -18,32 +31,46 @@ function Card ({offer, className, boxMouseEnterHandler=''}: CardProps): JSX.Elem
     price,
     type,
     rating,
+    isFavorite,
+    isPremium,
   } = offer;
+
+  let width;
+  let height;
+
+  if (isSmall) {
+    width='150';
+    height='110';
+  } else {
+    width='260';
+    height='200';
+  }
 
   return (
     <article
       className={`${className} place-card`}
-      onMouseEnter={() => boxMouseEnterHandler(id)}
+      onMouseEnter={() => onCardHover && onCardHover(id)}
     >
-      <div className="place-card__image-wrapper">
+      {isPremium && <PremiumMark />}
+      <div className={`${classNameWrap} place-card__image-wrapper`}>
         <a href="/#">
           <img
             className="place-card__image"
             src={images[0]}
-            width="260"
-            height="200"
+            width={width}
+            height={height}
             alt="Place"
           />
         </a>
       </div>
-      <div className="place-card__info">
+      <div className={`${classNameInfo} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
-          <ButtonBookmark />
+          <ButtonBookmark isFavorite={isFavorite}/>
 
         </div>
         <div className="place-card__rating rating">

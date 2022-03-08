@@ -1,6 +1,13 @@
-function ButtonBookmark (): JSX.Element {
+type ButtonBookmarkProps = {
+  isFavorite: boolean,
+}
+
+function ButtonBookmark ({isFavorite}: ButtonBookmarkProps): JSX.Element {
   return (
-    <button className="place-card__bookmark-button button" type="button">
+    <button
+      className={`${isFavorite && 'place-card__bookmark-button--active'} place-card__bookmark-button button`}
+      type="button"
+    >
       <svg className="place-card__bookmark-icon" width="18" height="19">
         <use xlinkHref="#icon-bookmark" />
       </svg>
