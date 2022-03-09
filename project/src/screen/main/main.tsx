@@ -3,12 +3,14 @@ import Locations from '../../components/locations/locations';
 import Sort from '../../components/sort/sort';
 import CardList from '../../components/card-list/card-list';
 import Map from '../../components/map/map';
+import {Offer} from '../../types/offer';
 
 type MainScreenProps = {
   offersCount: number;
+  offers: Offer[];
 }
 
-function Main({offersCount}: MainScreenProps): JSX.Element {
+function Main({offersCount, offers}: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
 
@@ -27,7 +29,7 @@ function Main({offersCount}: MainScreenProps): JSX.Element {
 
               <Sort />
 
-              <CardList />
+              <CardList offers={offers}/>
 
             </section>
             <div className="cities__right-section">

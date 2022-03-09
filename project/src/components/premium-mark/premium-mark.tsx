@@ -1,6 +1,10 @@
-function PremiumMark (): JSX.Element {
+type PremiumMarkProps = {
+  isProperty?: boolean,
+}
+
+function PremiumMark ({isProperty}: PremiumMarkProps): JSX.Element {
   return (
-    <div className="property__mark">
+    <div className={isProperty ? 'property__mark' : 'place-card__mark'}>
       <span>Premium</span>
     </div>
   );

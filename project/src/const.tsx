@@ -1,3 +1,29 @@
+export const OFFERS_FROM = 0;
+export const OFFERS_TO = 3;
+
+export const RATING_TYPES = [
+  {
+    title: 'perfect',
+    stars: 5,
+  },
+  {
+    title: 'good',
+    stars: 4,
+  },
+  {
+    title: 'not bad',
+    stars: 3,
+  },
+  {
+    title: 'badly',
+    stars: 2,
+  },
+  {
+    title: 'terribly',
+    stars: 1,
+  },
+];
+
 export enum AppRoute {
   Main = '/',
   SignIn = '/login',

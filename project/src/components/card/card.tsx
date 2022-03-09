@@ -1,45 +1,92 @@
 import ButtonBookmark from '../button-bookmark/button-bookmark';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
+import {Offer} from '../../types/offer';
+import {getRatingPercent} from '../../utils/utils';
+import PremiumMark from '../premium-mark/premium-mark';
 
-function Card (): JSX.Element {
+type CardProps = {
+  offer: Offer;
+  className: string;
+  onCardHover?: (id: number) => void;
+  classNameWrap?:string,
+  classNameInfo?:string,
+  isSmall?:boolean,
+}
+
+function Card (
+  {
+    offer,
+    className,
+    onCardHover,
+    classNameWrap='',
+    classNameInfo='',
+    isSmall,
+  }: CardProps): JSX.Element {
+
+  const {
+    id,
+    title,
+    images,
+    price,
+    type,
+    rating,
+    isFavorite,
+    isPremium,
+  } = offer;
+
+  let width;
+  let height;
+
+  if (isSmall) {
+    width='150';
+    height='110';
+  } else {
+    width='260';
+    height='200';
+  }
+
   return (
-    <article className="cities__place-card place-card">
-      <div className="cities__image-wrapper place-card__image-wrapper">
+    <article
+      className={`${className} place-card`}
+      onMouseEnter={() => onCardHover && onCardHover(id)}
+    >
+      {isPremium && <PremiumMark />}
+      <div className={`${classNameWrap} place-card__image-wrapper`}>
         <a href="/#">
           <img
             className="place-card__image"
-            src="img/apartment-01.jpg"
-            width="260"
-            height="200"
+            src={images[0]}
+            width={width}
+            height={height}
             alt="Place"
           />
         </a>
       </div>
-      <div className="place-card__info">
+      <div className={`${classNameInfo} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;120</b>
+            <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
-          <ButtonBookmark />
+          <ButtonBookmark isFavorite={isFavorite}/>
 
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '80 %'}} />
+            <span style={{width: `${getRatingPercent(rating)}%`}} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
           <Link
-            to={AppRoute.Room}
+            to={`${AppRoute.Room}/${id}`}
           >
-            Beautiful &amp; luxurious apartment at great location
+            {title}
           </Link>
         </h2>
-        <p className="place-card__type">Apartment</p>
+        <p className="place-card__type">{type}</p>
       </div>
     </article>
   );

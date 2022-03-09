@@ -3,21 +3,30 @@ import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import Favorites from '../../screen/favorites/favorites';
 import SingIn from '../../screen/sign-in/sing-in';
-import Offer from '../../screen/offer/offer';
-import NotFoundScreen from '../../screen/not - found-screen/not - found-screen';
+import Room from '../../screen/room/room';
+import NotFoundScreen from '../../screen/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
+import {Offer} from '../../types/offer';
+import {Review} from '../../types/review';
 
 type AppProps = {
   offersCount: number;
+  offers: Offer[];
+  reviews: Review[];
 }
 
-function App({offersCount}: AppProps): JSX.Element {
+function App({offersCount, offers, reviews}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<Main offersCount={offersCount} />}
+          element={
+            <Main
+              offersCount={offersCount}
+              offers={offers}
+            />
+          }
         />
         <Route
           path={AppRoute.SignIn}
@@ -27,15 +36,22 @@ function App({offersCount}: AppProps): JSX.Element {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.NoAuth}
+              authorizationStatus={AuthorizationStatus.Auth}
             >
-              <Favorites />
+              <Favorites offers={offers} />
             </PrivateRoute>
           }
         />
         <Route path={AppRoute.Room}>
-          <Route index element={<Offer />} />
-          <Route path=':id' element={<Offer />} />
+          <Route
+            path=':id'
+            element={
+              <Room
+                offers={offers}
+                reviews={reviews}
+              />
+            }
+          />
         </Route>
         <Route
           path="*"
