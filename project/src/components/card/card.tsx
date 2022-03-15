@@ -35,23 +35,16 @@ function Card (
     isPremium,
   } = offer;
 
-  let width;
-  let height;
-
-  if (isSmall) {
-    width='150';
-    height='110';
-  } else {
-    width='260';
-    height='200';
-  }
+  const width = isSmall ? '150' : '260';
+  const height = isSmall ? '110' : '200';
 
   return (
     <article
       className={`${className} place-card`}
-      onMouseEnter={() => onCardHover && onCardHover(id)}
+      onMouseEnter={() => onCardHover?.(id)}
     >
       {isPremium && <PremiumMark />}
+
       <div className={`${classNameWrap} place-card__image-wrapper`}>
         <a href="/#">
           <img
@@ -59,10 +52,11 @@ function Card (
             src={images[0]}
             width={width}
             height={height}
-            alt="Place"
+            alt={title}
           />
         </a>
       </div>
+
       <div className={`${classNameInfo} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
@@ -71,18 +65,17 @@ function Card (
           </div>
 
           <ButtonBookmark isFavorite={isFavorite}/>
-
         </div>
+
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
             <span style={{width: `${getRatingPercent(rating)}%`}} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
+
         <h2 className="place-card__name">
-          <Link
-            to={`${AppRoute.Room}/${id}`}
-          >
+          <Link to={`${AppRoute.Room}/${id}`}>
             {title}
           </Link>
         </h2>

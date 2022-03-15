@@ -24,6 +24,19 @@ export const RATING_TYPES = [
   },
 ];
 
+export const CITIES = {
+  AMSTERDAM: 'Amsterdam',
+  PARIS: 'Paris',
+  COLOGNE: 'Cologne',
+  BRUSSELS: 'Brussels',
+  HAMBURG: 'Hamburg',
+  DUSSELDORF: 'Dusseldorf',
+};
+
+export const URL_MARKER_DEFAULT = 'img/pin.svg';
+
+export const URL_MARKER_CURRENT = 'img/pin-active.svg';
+
 export enum AppRoute {
   Main = '/',
   SignIn = '/login',

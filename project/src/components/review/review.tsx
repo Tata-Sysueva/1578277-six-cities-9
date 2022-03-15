@@ -1,14 +1,16 @@
-import {Review} from '../../types/review';
+import {ReviewType} from '../../types/review-type';
+import {getRatingPercent} from '../../utils/utils';
 
 type CommentProps = {
-  review: Review;
+  review: ReviewType;
 }
 
-function Comment ({review}: CommentProps):JSX.Element {
+function Review ({review}: CommentProps):JSX.Element {
   const {
     comment,
     date,
     user,
+    rating,
   } = review;
 
   const {
@@ -33,7 +35,7 @@ function Comment ({review}: CommentProps):JSX.Element {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: '80 %'}} />
+            <span style={{width: `${getRatingPercent(rating)}%`}} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -46,4 +48,4 @@ function Comment ({review}: CommentProps):JSX.Element {
   );
 }
 
-export default Comment;
+export default Review;

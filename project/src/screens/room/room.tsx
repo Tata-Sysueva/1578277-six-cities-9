@@ -1,11 +1,11 @@
 import Header from '../../components/header/header';
-import NewComment from '../../components/new-comment/new-comment';
+import ReviewForm from '../../components/review-form/review-form';
 import PremiumMark from '../../components/premium-mark/premium-mark';
 import Map from '../../components/map/map';
 import {Offer} from '../../types/offer';
 import NearPlaces from '../../components/near-places/near-places';
-import {Review} from '../../types/review';
-import Comment from '../../components/comment/comment';
+import {ReviewType} from '../../types/review-type';
+import Review from '../../components/review/review';
 import {useParams} from 'react-router-dom';
 import {AuthorizationStatus} from '../../const';
 import {getRatingPercent} from '../../utils/utils';
@@ -15,7 +15,7 @@ import pluralize from 'pluralize';
 
 type RoomProps = {
   offers: Offer[];
-  reviews: Review[];
+  reviews: ReviewType[];
 };
 
 function Room({offers, reviews}: RoomProps ): JSX.Element {
@@ -56,6 +56,7 @@ function Room({offers, reviews}: RoomProps ): JSX.Element {
           <div className="property__container container">
             <div className="property__wrapper">
               {isPremium && <PremiumMark isProperty/>}
+
               <div className="property__name-wrapper">
                 <h1 className="property__name">
                   {title}
@@ -67,6 +68,7 @@ function Room({offers, reviews}: RoomProps ): JSX.Element {
                   <span className="visually-hidden">To bookmarks</span>
                 </button>
               </div>
+
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
                   <span style={{width: `${getRatingPercent(rating)}%`}} />
@@ -74,6 +76,7 @@ function Room({offers, reviews}: RoomProps ): JSX.Element {
                 </div>
                 <span className="property__rating-value rating__value">{rating}</span>
               </div>
+
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
                   {type}
@@ -85,6 +88,7 @@ function Room({offers, reviews}: RoomProps ): JSX.Element {
                   Max {maxAdults} adults
                 </li>
               </ul>
+
               <div className="property__price">
                 <b className="property__price-value">&euro;{price}</b>
                 <span className="property__price-text">&nbsp;night</span>
@@ -95,6 +99,7 @@ function Room({offers, reviews}: RoomProps ): JSX.Element {
                   {goods.map((good) => <li className="property__inside-item" key={good}>{good}</li>)}
                 </ul>
               </div>
+
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
@@ -121,26 +126,30 @@ function Room({offers, reviews}: RoomProps ): JSX.Element {
                       Pro
                     </span>}
                 </div>
+
                 <div className="property__description">
                   <p className="property__text">
                     {description}
                   </p>
                 </div>
               </div>
+
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
+                <h2 className="reviews__title">
+                  Reviews &middot;
+                  <span className="reviews__amount">{reviews.length}</span>
+                </h2>
                 <ul className="reviews__list">
-                  {reviews.map((review) => <Comment key={review.id} review={review}/>)}
+                  {reviews.map((review) => <Review key={review.id} review={review}/>)}
                 </ul>
 
-                {AuthorizationStatus.Auth && <NewComment /> }
+                {AuthorizationStatus.Auth && <ReviewForm /> }
 
               </section>
             </div>
           </div>
 
-          <Map className="property__map" />
-
+          <Map className="property__map" offersInCurrentCity = {offers} />
         </section>
 
         <NearPlaces offers={offers} />

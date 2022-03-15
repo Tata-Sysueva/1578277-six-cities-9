@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 
-function UserLogged (): JSX.Element {
+function UserNav (): JSX.Element {
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">
@@ -25,4 +25,4 @@ function UserLogged (): JSX.Element {
   );
 }
 
-export default UserLogged;
+export default UserNav;

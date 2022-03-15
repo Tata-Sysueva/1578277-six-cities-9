@@ -1,8 +1,8 @@
 import {ChangeEvent, useState} from 'react';
 import {RATING_TYPES} from '../../const';
-import ReviewsRating from '../reviews-rating/reviews-rating';
+import ReviewRating from '../review-rating/review-rating';
 
-function NewComment (): JSX.Element {
+function ReviewForm (): JSX.Element {
   const [formData, setFormData] = useState({
     rating: '',
     review: '',
@@ -13,13 +13,17 @@ function NewComment (): JSX.Element {
     setFormData({...formData, [name]: value});
   };
 
+  const isShort = formData.review.length <= 50;
+  const isLong = formData.review.length > 300;
+  const isCheck = Number(formData.rating) < 1;
+
   return (
     <form className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {RATING_TYPES.map((ratingType) =>
           (
-            <ReviewsRating
+            <ReviewRating
               stars={ratingType.stars}
               title={ratingType.title}
               onFieldChange={handleChange}
@@ -47,7 +51,7 @@ function NewComment (): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled
+          disabled={isShort || isCheck || isLong}
         >
           Submit
         </button>
@@ -56,4 +60,4 @@ function NewComment (): JSX.Element {
   );
 }
 
-export default NewComment;
+export default ReviewForm;

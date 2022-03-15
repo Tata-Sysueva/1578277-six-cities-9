@@ -1,16 +1,12 @@
 import Card from '../card/card';
 import {Offer} from '../../types/offer';
-import {useState} from 'react';
 
 type CardListProps = {
   offers: Offer[];
+  onCardHover?: (id: number) => void;
 }
 
-function CardList ({offers}: CardListProps): JSX.Element {
-  const [, setOffersId] = useState(0);
-
-  const handleMouseEnter = (newId: number) => setOffersId(newId);
-
+function CardList ({offers, onCardHover}: CardListProps): JSX.Element {
   return (
     <div className="cities__places-list places__list tabs__content">
       {
@@ -19,7 +15,7 @@ function CardList ({offers}: CardListProps): JSX.Element {
             key={offer.id}
             offer={offer}
             className="cities__place-card"
-            onCardHover={handleMouseEnter}
+            onCardHover={onCardHover}
           />
         ))
       };

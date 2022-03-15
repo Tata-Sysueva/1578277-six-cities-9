@@ -6,7 +6,7 @@ type ReviewRatingProps = {
   onFieldChange: (evt: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
 }
 
-function ReviewsRating({stars, title, onFieldChange}: ReviewRatingProps): JSX.Element {
+function ReviewRating({stars, title, onFieldChange}: ReviewRatingProps): JSX.Element {
   return (
     <>
       <input
@@ -30,4 +30,4 @@ function ReviewsRating({stars, title, onFieldChange}: ReviewRatingProps): JSX.El
   );
 }
 
-export default ReviewsRating;
+export default ReviewRating;
