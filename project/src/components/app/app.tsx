@@ -1,18 +1,18 @@
-import Main from '../../screen/main/main';
+import Main from '../../screens/main/main';
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import Favorites from '../../screen/favorites/favorites';
-import SingIn from '../../screen/sign-in/sing-in';
-import Room from '../../screen/room/room';
-import NotFoundScreen from '../../screen/not-found-screen/not-found-screen';
+import Favorites from '../../screens/favorites/favorites';
+import SingIn from '../../screens/sign-in/sing-in';
+import Room from '../../screens/room/room';
+import NotFoundScreen from '../../screens/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 import {Offer} from '../../types/offer';
-import {Review} from '../../types/review';
+import {ReviewType} from '../../types/review-type';
 
 type AppProps = {
   offersCount: number;
   offers: Offer[];
-  reviews: Review[];
+  reviews: ReviewType[];
 }
 
 function App({offersCount, offers, reviews}: AppProps): JSX.Element {

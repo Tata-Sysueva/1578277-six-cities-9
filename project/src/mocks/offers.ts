@@ -120,7 +120,7 @@ export const offers: Offer[]  = [
     price: 20,
     rating: 1.8,
     title: 'Beautiful location',
-    type: 'apartment',
+    type: 'Apartment',
   },
   {
     bedrooms: 10,
@@ -158,6 +158,6 @@ export const offers: Offer[]  = [
     price: 125,
     rating: 4.9,
     title: 'Beautiful & luxurious studio at great location',
-    type: 'apartment',
+    type: 'Apartment',
   },
 ];

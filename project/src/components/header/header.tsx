@@ -1,4 +1,4 @@
-import UserLogged from '../user-logged/user-logged';
+import UserNav from '../user-nav/user-nav';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 
@@ -22,7 +22,7 @@ function Header (): JSX.Element {
             </Link>
           </div>
 
-          <UserLogged />
+          <UserNav />
 
         </div>
       </div>
