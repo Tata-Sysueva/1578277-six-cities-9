@@ -5,14 +5,23 @@ import CardList from '../../components/card-list/card-list';
 import Map from '../../components/map/map';
 import {Offer} from '../../types/offer';
 import MainEmpty from '../../components/main-empty/main-empty';
+import {CITIES} from '../../const';
+import pluralize from 'pluralize';
+import {useState} from 'react';
 
 type MainScreenProps = {
-  offersCount: number;
   offers: Offer[];
 }
 
-function Main({offersCount, offers}: MainScreenProps): JSX.Element {
+function Main({offers}: MainScreenProps): JSX.Element {
   const isEmpty = offers.length <=0;
+  const offersInCurrentCity = offers.filter((offer) => offer.city.name === CITIES.AMSTERDAM);
+  const [{ city }] = offersInCurrentCity;
+  const countOffers = offersInCurrentCity.length;
+
+  const [id, setOffersId] = useState(0);
+
+  const handleMouseEnter = (newId: number) => setOffersId(newId);
 
   return (
     <div className="page page--gray page--main">
@@ -30,19 +39,22 @@ function Main({offersCount, offers}: MainScreenProps): JSX.Element {
               <MainEmpty /> :
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{offersCount} places to stay in Amsterdam</b>
+                <b className="places__found">{`${countOffers}  ${pluralize('place', countOffers)} to stay in ${city.name}`} </b>
 
                 <Sort />
 
-                <CardList offers={offers}/>
+                <CardList offers={offersInCurrentCity} onCardHover={handleMouseEnter}/>
 
-              </section>
-            }
+              </section>}
 
             <div className="cities__right-section">
 
-              {!isEmpty && <Map className="cities__map"/>}
-
+              {!isEmpty &&
+                <Map
+                  className="cities__map"
+                  offersInCurrentCity = {offersInCurrentCity}
+                  currentId={id}
+                />}
             </div>
           </div>
         </div>

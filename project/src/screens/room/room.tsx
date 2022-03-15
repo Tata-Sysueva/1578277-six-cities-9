@@ -149,7 +149,7 @@ function Room({offers, reviews}: RoomProps ): JSX.Element {
             </div>
           </div>
 
-          <Map className="property__map" />
+          <Map className="property__map" offersInCurrentCity = {offers} />
         </section>
 
         <NearPlaces offers={offers} />
