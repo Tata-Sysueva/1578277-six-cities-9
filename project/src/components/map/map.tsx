@@ -45,7 +45,7 @@ function Map ({ className='', offersInCurrentCity, currentId }: MapProps): JSX.E
           .addTo(map);
       });
     }
-  }, [map, offersInCurrentCity]);
+  }, [map, offersInCurrentCity, currentId]);
 
   return (
     <section

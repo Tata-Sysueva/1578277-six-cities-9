@@ -11,7 +11,7 @@ import {AuthorizationStatus} from '../../const';
 import {getRatingPercent} from '../../utils/utils';
 import RoomGallery from '../../components/room-gallery/room-gallery';
 import pluralize from 'pluralize';
-
+import {offersNear} from '../../mocks/offers-near';
 
 type RoomProps = {
   offers: Offer[];
@@ -26,6 +26,7 @@ function Room({offers, reviews}: RoomProps ): JSX.Element {
   const [ offerInfo ] = curOffer;
 
   const {
+    id,
     title,
     rating,
     maxAdults,
@@ -149,10 +150,16 @@ function Room({offers, reviews}: RoomProps ): JSX.Element {
             </div>
           </div>
 
-          <Map className="property__map" offersInCurrentCity = {offers} />
+          <Map
+            className="property__map"
+            offersInCurrentCity = {offersNear}
+            currentId={id}
+          />
         </section>
 
-        <NearPlaces offers={offers} />
+        <NearPlaces
+          offersNear={offersNear}
+        />
       </main>
     </div>
   );

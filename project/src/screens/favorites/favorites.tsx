@@ -10,7 +10,7 @@ type FavoritesProps = {
 }
 
 function Favorites ({offers}: FavoritesProps): JSX.Element {
-  const favoriteOffers = offers.filter(offer => offer.isFavorite);
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
   const isEmpty = favoriteOffers.length <= 0;
   const groupFavoriteOffers = Object.entries(mapOffersToCities(favoriteOffers));
 
@@ -34,8 +34,7 @@ function Favorites ({offers}: FavoritesProps): JSX.Element {
                   />),
                 )}
               </ul>
-            </section>
-          }
+            </section>}
         </div>
       </main>
 

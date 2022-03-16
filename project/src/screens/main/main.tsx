@@ -39,11 +39,16 @@ function Main({offers}: MainScreenProps): JSX.Element {
               <MainEmpty /> :
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{`${countOffers}  ${pluralize('place', countOffers)} to stay in ${city.name}`} </b>
+                <b className="places__found">
+                  {`${countOffers}  ${pluralize('place', countOffers)} to stay in ${city.name}`}
+                </b>
 
                 <Sort />
 
-                <CardList offers={offersInCurrentCity} onCardHover={handleMouseEnter}/>
+                <CardList
+                  offers={offersInCurrentCity}
+                  onCardHover={handleMouseEnter}
+                />
 
               </section>}
 
