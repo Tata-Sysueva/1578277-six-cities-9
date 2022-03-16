@@ -11,14 +11,16 @@ import {AuthorizationStatus} from '../../const';
 import {getRatingPercent} from '../../utils/utils';
 import RoomGallery from '../../components/room-gallery/room-gallery';
 import pluralize from 'pluralize';
-
+import {offersNear} from '../../mocks/offers-near';
 
 type RoomProps = {
   offers: Offer[];
   reviews: ReviewType[];
+  onCardHover?: (id: number) => void;
+  currentId: number;
 };
 
-function Room({offers, reviews}: RoomProps ): JSX.Element {
+function Room({offers, reviews, onCardHover, currentId}: RoomProps ): JSX.Element {
   const params = useParams();
   const paramsId = params.id;
   const cardId = Number(paramsId);
@@ -149,10 +151,17 @@ function Room({offers, reviews}: RoomProps ): JSX.Element {
             </div>
           </div>
 
-          <Map className="property__map" offersInCurrentCity = {offers} />
+          <Map
+            className="property__map"
+            offersInCurrentCity = {offersNear}
+            currentId={currentId}
+          />
         </section>
 
-        <NearPlaces offers={offers} />
+        <NearPlaces
+          offersNear={offersNear}
+          onCardHover={onCardHover}
+        />
       </main>
     </div>
   );

@@ -7,21 +7,18 @@ import {Offer} from '../../types/offer';
 import MainEmpty from '../../components/main-empty/main-empty';
 import {CITIES} from '../../const';
 import pluralize from 'pluralize';
-import {useState} from 'react';
 
 type MainScreenProps = {
   offers: Offer[];
+  onCardHover?: (id: number) => void;
+  id: number;
 }
 
-function Main({offers}: MainScreenProps): JSX.Element {
+function Main({offers, onCardHover, id}: MainScreenProps): JSX.Element {
   const isEmpty = offers.length <=0;
   const offersInCurrentCity = offers.filter((offer) => offer.city.name === CITIES.AMSTERDAM);
   const [{ city }] = offersInCurrentCity;
   const countOffers = offersInCurrentCity.length;
-
-  const [id, setOffersId] = useState(0);
-
-  const handleMouseEnter = (newId: number) => setOffersId(newId);
 
   return (
     <div className="page page--gray page--main">
@@ -39,11 +36,13 @@ function Main({offers}: MainScreenProps): JSX.Element {
               <MainEmpty /> :
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{`${countOffers}  ${pluralize('place', countOffers)} to stay in ${city.name}`} </b>
+                <b className="places__found">
+                  {`${countOffers}  ${pluralize('place', countOffers)} to stay in ${city.name}`}
+                </b>
 
                 <Sort />
 
-                <CardList offers={offersInCurrentCity} onCardHover={handleMouseEnter}/>
+                <CardList offers={offersInCurrentCity} onCardHover={onCardHover}/>
 
               </section>}
 
