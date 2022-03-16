@@ -16,10 +16,6 @@ type AppProps = {
 }
 
 function App({offers, reviews}: AppProps): JSX.Element {
-  const [id, setOffersId] = useState(0);
-
-  const handleMouseEnter = (newId: number) => setOffersId(newId);
-
   return (
     <BrowserRouter>
       <Routes>
@@ -28,8 +24,6 @@ function App({offers, reviews}: AppProps): JSX.Element {
           element={
             <Main
               offers={offers}
-              onCardHover={handleMouseEnter}
-              id={id}
             />
           }
         />
@@ -54,8 +48,6 @@ function App({offers, reviews}: AppProps): JSX.Element {
               <Room
                 offers={offers}
                 reviews={reviews}
-                onCardHover={handleMouseEnter}
-                currentId={id}
               />
             }
           />

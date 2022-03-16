@@ -16,11 +16,9 @@ import {offersNear} from '../../mocks/offers-near';
 type RoomProps = {
   offers: Offer[];
   reviews: ReviewType[];
-  onCardHover?: (id: number) => void;
-  currentId: number;
 };
 
-function Room({offers, reviews, onCardHover, currentId}: RoomProps ): JSX.Element {
+function Room({offers, reviews}: RoomProps ): JSX.Element {
   const params = useParams();
   const paramsId = params.id;
   const cardId = Number(paramsId);
@@ -28,6 +26,7 @@ function Room({offers, reviews, onCardHover, currentId}: RoomProps ): JSX.Elemen
   const [ offerInfo ] = curOffer;
 
   const {
+    id,
     title,
     rating,
     maxAdults,
@@ -154,13 +153,12 @@ function Room({offers, reviews, onCardHover, currentId}: RoomProps ): JSX.Elemen
           <Map
             className="property__map"
             offersInCurrentCity = {offersNear}
-            currentId={currentId}
+            currentId={id}
           />
         </section>
 
         <NearPlaces
           offersNear={offersNear}
-          onCardHover={onCardHover}
         />
       </main>
     </div>
