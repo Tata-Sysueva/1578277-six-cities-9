@@ -1,6 +1,11 @@
 import {CITIES_NAME} from '../../const';
 
-function Locations (): JSX.Element {
+type LocationsProps = {
+  cityName: string,
+  onCityClick: (city: string) => void;
+}
+
+function Locations ({cityName, onCityClick}: LocationsProps): JSX.Element {
   return (
     <div className="tabs">
       <section className="locations container">
@@ -8,8 +13,9 @@ function Locations (): JSX.Element {
           {CITIES_NAME.map((city) => (
             <li className="locations__item" key={city}>
               <a
-                className="locations__item-link tabs__item"
+                className={`locations__item-link tabs__item ${cityName === city ? 'tabs__item--active' : ''}`}
                 href="/#"
+                onClick = {() => onCityClick(city)}
               >
                 <span>{city}</span>
               </a>

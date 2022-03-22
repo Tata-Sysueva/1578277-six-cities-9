@@ -18,7 +18,7 @@ function CardList ({offers, onCardHover}: CardListProps): JSX.Element {
             onCardHover={onCardHover}
           />
         ))
-      };
+      }
     </div>
   );
 }
