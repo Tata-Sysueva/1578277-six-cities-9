@@ -2,7 +2,7 @@ import styles from './NotFoundScreen.module.css';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 
-function NotFoundScreen (): JSX.Element {
+function NotFoundScreen(): JSX.Element {
   return (
     <section className={styles.section}>
       <header className="header">

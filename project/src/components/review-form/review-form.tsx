@@ -2,7 +2,7 @@ import {ChangeEvent, useState} from 'react';
 import {RATING_TYPES} from '../../const';
 import ReviewRating from '../review-rating/review-rating';
 
-function ReviewForm (): JSX.Element {
+function ReviewForm(): JSX.Element {
   const [formData, setFormData] = useState({
     rating: '',
     review: '',

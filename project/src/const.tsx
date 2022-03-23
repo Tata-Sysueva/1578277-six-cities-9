@@ -1,5 +1,7 @@
 export const OFFERS_FROM = 0;
 export const OFFERS_TO = 3;
+export const LAYER_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+export const COPYRIGHT_MAP = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
 export const RATING_TYPES = [
   {
@@ -24,16 +26,7 @@ export const RATING_TYPES = [
   },
 ];
 
-export const CITIES = {
-  AMSTERDAM: 'Amsterdam',
-  PARIS: 'Paris',
-  COLOGNE: 'Cologne',
-  BRUSSELS: 'Brussels',
-  HAMBURG: 'Hamburg',
-  DUSSELDORF: 'Dusseldorf',
-};
-
-export const CITIES_NAME = [
+export const CITIES = [
   'Paris',
   'Cologne',
   'Brussels',

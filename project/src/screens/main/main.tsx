@@ -6,22 +6,23 @@ import Map from '../../components/map/map';
 import MainEmpty from '../../components/main-empty/main-empty';
 import pluralize from 'pluralize';
 import {useState} from 'react';
-import {useAppSelector} from '../../hooks';
-import {store} from '../../store';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {changeCity} from '../../store/action';
 
 function Main(): JSX.Element {
   const cityName = useAppSelector((state) => state.city);
-  const offersInCurrentCity = useAppSelector((state) => state.offers);
-  const countOffers = offersInCurrentCity.length;
-  const isEmpty = countOffers <=0;
+  const offers = useAppSelector((state) => state.offers);
+  const dispatch = useAppDispatch();
+
+  const currentOffers = offers.filter((offer) => offer.city.name === cityName);
+  const isEmpty = currentOffers.length === 0;
 
   const [id, setOffersId] = useState(0);
 
   const handleMouseEnter = (newId: number) => setOffersId(newId);
 
   const handleCityClick = (city: string) => {
-    store.dispatch(changeCity(city));
+    dispatch(changeCity(city));
   };
 
   return (
@@ -41,13 +42,13 @@ function Main(): JSX.Element {
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">
-                  {`${countOffers}  ${pluralize('place', countOffers)} to stay in ${offersInCurrentCity[0].city.name}`}
+                  {`${currentOffers.length} ${pluralize('place', currentOffers.length)} to stay in ${currentOffers[0].city.name}`}
                 </b>
 
                 <Sort />
 
                 <CardList
-                  offers={offersInCurrentCity}
+                  offers={currentOffers}
                   onCardHover={handleMouseEnter}
                 />
 
@@ -58,7 +59,7 @@ function Main(): JSX.Element {
               {!isEmpty &&
                 <Map
                   className="cities__map"
-                  offersInCurrentCity = {offersInCurrentCity}
+                  offersInCurrentCity = {currentOffers}
                   currentId={id}
                 />}
             </div>

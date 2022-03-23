@@ -1,7 +1,7 @@
 import {Offer} from '../../types/offer';
 import {useEffect, useRef} from 'react';
-import useMap from '../../hooks/useMap';
-import L, {Icon, Marker} from 'leaflet';
+import useMap from '../../hooks/use-map';
+import {Icon, layerGroup, Marker} from 'leaflet';
 import {URL_MARKER_CURRENT, URL_MARKER_DEFAULT} from '../../const';
 import 'leaflet/dist/leaflet.css';
 
@@ -11,7 +11,7 @@ type MapProps = {
   currentId?:number,
 }
 
-function Map ({ className='', offersInCurrentCity, currentId }: MapProps): JSX.Element {
+function Map({ className='', offersInCurrentCity, currentId }: MapProps): JSX.Element {
   const [{ city }] = offersInCurrentCity;
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -29,22 +29,30 @@ function Map ({ className='', offersInCurrentCity, currentId }: MapProps): JSX.E
   });
 
   useEffect(() => {
-    const markerGroup = L.layerGroup();
+    const markerGroup = layerGroup();
+
     if (map) {
+      map.setView({
+        lat: city.location.latitude,
+        lng: city.location.longitude,
+      });
+
       offersInCurrentCity.forEach(( { id, location }) => {
         const marker = new Marker({
           lat: location.latitude,
           lng: location.longitude,
         });
-        markerGroup.addTo(map);
+
         marker
           .setIcon(
-            currentId !== undefined &&  currentId === id
+            currentId && currentId === id
               ? currentCustomIcon
               : defaultCustomIcon,
           )
           .addTo(markerGroup);
       });
+
+      markerGroup.addTo(map);
     }
     return () => {
       markerGroup.clearLayers();

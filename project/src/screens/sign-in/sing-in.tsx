@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 
-function SingIn (): JSX.Element {
+function SingIn(): JSX.Element {
   return  (
     <div className="page page--gray page--login">
       <header className="header">
