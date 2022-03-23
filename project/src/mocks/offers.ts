@@ -50,8 +50,8 @@ export const offers: Offer[]  = [
     bedrooms: 2,
     city: {
       location: {
-        latitude: 51.370216,
-        longitude: 3.895168,
+        latitude: 48.8534100,
+        longitude: 2.3488000,
         zoom: 10,
       },
       name: 'Paris',
@@ -73,8 +73,8 @@ export const offers: Offer[]  = [
     isFavorite: false,
     isPremium: false,
     location: {
-      latitude: 52.35514938496375,
-      longitude: 4.673877537499945,
+      latitude: 48.8610586625235,
+      longitude: 2.33548521995544,
       zoom: 8,
     },
     maxAdults: 2,
@@ -88,8 +88,8 @@ export const offers: Offer[]  = [
     bedrooms: 3,
     city: {
       location: {
-        latitude: 50.370216,
-        longitude: 2.895168,
+        latitude: 50.9333300,
+        longitude: 6.9500000,
         zoom: 10,
       },
       name: 'Cologne',
@@ -111,8 +111,8 @@ export const offers: Offer[]  = [
     isFavorite: true,
     isPremium: false,
     location: {
-      latitude: 52.35514938896378,
-      longitude: 4.673877532499948,
+      latitude: 50.94111,
+      longitude: 6.95667,
       zoom: 8,
     },
     maxAdults: 1,
@@ -164,11 +164,11 @@ export const offers: Offer[]  = [
     bedrooms: 1,
     city: {
       location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
+        latitude: 48.8534100,
+        longitude: 2.3488000,
         zoom: 10,
       },
-      name: 'Amsterdam',
+      name: 'Paris',
     },
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     goods: [
@@ -194,8 +194,8 @@ export const offers: Offer[]  = [
     isFavorite: true,
     isPremium: true,
     location: {
-      latitude: 52.369553943508,
-      longitude: 4.85309666406198,
+      latitude: 48.85297,
+      longitude: 2.349901,
       zoom: 8,
     },
     maxAdults: 4,

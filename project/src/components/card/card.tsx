@@ -14,7 +14,7 @@ type CardProps = {
   isSmall?:boolean,
 }
 
-function Card (
+function Card(
   {
     offer,
     className,

@@ -6,7 +6,7 @@ type FavoritesLocationProps = {
   offers: Offer[],
 }
 
-function FavoritesLocation ({city, offers}: FavoritesLocationProps): JSX.Element {
+function FavoritesLocation({city, offers}: FavoritesLocationProps): JSX.Element {
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">

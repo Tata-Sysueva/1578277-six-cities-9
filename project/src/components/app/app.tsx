@@ -8,7 +8,6 @@ import NotFoundScreen from '../../screens/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 import {Offer} from '../../types/offer';
 import {ReviewType} from '../../types/review-type';
-import {useState} from 'react';
 
 type AppProps = {
   offers: Offer[];
@@ -22,9 +21,7 @@ function App({offers, reviews}: AppProps): JSX.Element {
         <Route
           path={AppRoute.Main}
           element={
-            <Main
-              offers={offers}
-            />
+            <Main/>
           }
         />
         <Route

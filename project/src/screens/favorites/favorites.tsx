@@ -9,7 +9,7 @@ type FavoritesProps = {
   offers: Offer[],
 }
 
-function Favorites ({offers}: FavoritesProps): JSX.Element {
+function Favorites({offers}: FavoritesProps): JSX.Element {
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
   const isEmpty = favoriteOffers.length <= 0;
   const groupFavoriteOffers = Object.entries(mapOffersToCities(favoriteOffers));

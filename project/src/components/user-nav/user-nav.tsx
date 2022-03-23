@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 
-function UserNav (): JSX.Element {
+function UserNav(): JSX.Element {
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">

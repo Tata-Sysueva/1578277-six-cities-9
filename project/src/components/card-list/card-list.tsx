@@ -6,7 +6,7 @@ type CardListProps = {
   onCardHover?: (id: number) => void;
 }
 
-function CardList ({offers, onCardHover}: CardListProps): JSX.Element {
+function CardList({offers, onCardHover}: CardListProps): JSX.Element {
   return (
     <div className="cities__places-list places__list tabs__content">
       {
@@ -18,7 +18,7 @@ function CardList ({offers, onCardHover}: CardListProps): JSX.Element {
             onCardHover={onCardHover}
           />
         ))
-      };
+      }
     </div>
   );
 }

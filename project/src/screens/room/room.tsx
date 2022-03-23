@@ -152,14 +152,12 @@ function Room({offers, reviews}: RoomProps ): JSX.Element {
 
           <Map
             className="property__map"
-            offersInCurrentCity = {offersNear}
+            offersInCurrentCity={offersNear}
             currentId={id}
           />
         </section>
 
-        <NearPlaces
-          offersNear={offersNear}
-        />
+        <NearPlaces offersNear={offersNear} />
       </main>
     </div>
   );

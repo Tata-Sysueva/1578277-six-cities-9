@@ -2,7 +2,7 @@ type ButtonBookmarkProps = {
   isFavorite: boolean,
 }
 
-function ButtonBookmark ({isFavorite}: ButtonBookmarkProps): JSX.Element {
+function ButtonBookmark({isFavorite}: ButtonBookmarkProps): JSX.Element {
   return (
     <button
       className={`${isFavorite && 'place-card__bookmark-button--active'} place-card__bookmark-button button`}

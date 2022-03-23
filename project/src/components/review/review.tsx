@@ -5,7 +5,7 @@ type CommentProps = {
   review: ReviewType;
 }
 
-function Review ({review}: CommentProps):JSX.Element {
+function Review({review}: CommentProps):JSX.Element {
   const {
     comment,
     date,
