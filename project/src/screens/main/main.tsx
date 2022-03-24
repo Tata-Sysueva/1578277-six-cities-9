@@ -7,22 +7,44 @@ import MainEmpty from '../../components/main-empty/main-empty';
 import pluralize from 'pluralize';
 import {useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {changeCity} from '../../store/action';
+import {changeCity, changeSortType} from '../../store/action';
+import {SORT_TYPE} from '../../const';
+import {SortHighToLow, SortLowToHigh, SortTopRated} from '../../utils/utils';
 
 function Main(): JSX.Element {
   const cityName = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
+  const sortType = useAppSelector((state) => state.sortType);
   const dispatch = useAppDispatch();
 
   const currentOffers = offers.filter((offer) => offer.city.name === cityName);
   const isEmpty = currentOffers.length === 0;
 
+  const getSortOffers = () => {
+    switch (sortType) {
+      case SORT_TYPE[1]:
+        return currentOffers.sort(SortHighToLow);
+      case SORT_TYPE[2]:
+        return currentOffers.sort(SortLowToHigh);
+      case SORT_TYPE[3]:
+        return currentOffers.sort(SortTopRated);
+      default:
+        return currentOffers;
+    }
+  };
+
+  getSortOffers();
+
+
   const [id, setOffersId] = useState(0);
 
   const handleMouseEnter = (newId: number) => setOffersId(newId);
 
+  const handleSortClick = (sortTypeCheck: string) => dispatch(changeSortType(sortTypeCheck));
+
   const handleCityClick = (city: string) => {
     dispatch(changeCity(city));
+    dispatch(changeSortType(SORT_TYPE[0]));
   };
 
   return (
@@ -45,7 +67,7 @@ function Main(): JSX.Element {
                   {`${currentOffers.length} ${pluralize('place', currentOffers.length)} to stay in ${currentOffers[0].city.name}`}
                 </b>
 
-                <Sort />
+                <Sort sortTypeCheck={sortType} onSortClick={handleSortClick}/>
 
                 <CardList
                   offers={currentOffers}
