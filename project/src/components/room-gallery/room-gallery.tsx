@@ -2,7 +2,7 @@ type RoomGalleryProps = {
   imagesSrc: string[],
 }
 
-function RoomGallery({ imagesSrc }: RoomGalleryProps): JSX.Element {
+function RoomGallery({imagesSrc}: RoomGalleryProps): JSX.Element {
   return (
     <div className="property__gallery-container container">
       <div className="property__gallery">

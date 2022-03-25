@@ -1,3 +1,4 @@
+import {useParams} from 'react-router-dom';
 import Header from '../../components/header/header';
 import ReviewForm from '../../components/review-form/review-form';
 import PremiumMark from '../../components/premium-mark/premium-mark';
@@ -6,7 +7,6 @@ import {Offer} from '../../types/offer';
 import NearPlaces from '../../components/near-places/near-places';
 import {ReviewType} from '../../types/review-type';
 import Review from '../../components/review/review';
-import {useParams} from 'react-router-dom';
 import {AuthorizationStatus} from '../../const';
 import {getRatingPercent} from '../../utils/utils';
 import RoomGallery from '../../components/room-gallery/room-gallery';

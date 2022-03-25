@@ -14,7 +14,10 @@ function Locations({cityName, onCityClick}: LocationsProps): JSX.Element {
           {CITIES.map((city) => (
             <li className="locations__item" key={city}>
               <a
-                className={classNames('locations__item-link', 'tabs__item', {'tabs__item--active': cityName === city})}
+                className={classNames(
+                  'locations__item-link',
+                  'tabs__item',
+                  {'tabs__item--active': cityName === city})}
                 href="/#"
                 onClick = {() => onCityClick(city)}
               >

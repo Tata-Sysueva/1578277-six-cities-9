@@ -7,15 +7,33 @@ import MainEmpty from '../../components/main-empty/main-empty';
 import pluralize from 'pluralize';
 import {useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {changeCity} from '../../store/action';
+import {changeCity, changeSortType} from '../../store/action';
+import {SortTypes} from '../../const';
+import {SortHighToLow, SortLowToHigh, SortTopRated} from '../../utils/utils';
 
 function Main(): JSX.Element {
   const cityName = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
+  const sortType = useAppSelector((state) => state.sortType);
   const dispatch = useAppDispatch();
 
   const currentOffers = offers.filter((offer) => offer.city.name === cityName);
   const isEmpty = currentOffers.length === 0;
+
+  const getSortOffers = () => {
+    switch (sortType) {
+      case SortTypes.HighToLow:
+        return currentOffers.sort(SortHighToLow);
+      case SortTypes.LowToHigh:
+        return currentOffers.sort(SortLowToHigh);
+      case SortTypes.TopRatedFirst:
+        return currentOffers.sort(SortTopRated);
+      default:
+        return currentOffers;
+    }
+  };
+
+  getSortOffers();
 
   const [id, setOffersId] = useState(0);
 
@@ -23,6 +41,7 @@ function Main(): JSX.Element {
 
   const handleCityClick = (city: string) => {
     dispatch(changeCity(city));
+    dispatch(changeSortType(SortTypes.Popular));
   };
 
   return (
@@ -45,7 +64,7 @@ function Main(): JSX.Element {
                   {`${currentOffers.length} ${pluralize('place', currentOffers.length)} to stay in ${currentOffers[0].city.name}`}
                 </b>
 
-                <Sort />
+                <Sort sortTypeCheck={sortType} />
 
                 <CardList
                   offers={currentOffers}
