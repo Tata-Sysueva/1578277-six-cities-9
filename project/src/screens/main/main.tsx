@@ -8,7 +8,7 @@ import pluralize from 'pluralize';
 import {useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {changeCity, changeSortType} from '../../store/action';
-import {SORT_TYPE} from '../../const';
+import {SortTypes} from '../../const';
 import {SortHighToLow, SortLowToHigh, SortTopRated} from '../../utils/utils';
 
 function Main(): JSX.Element {
@@ -22,11 +22,11 @@ function Main(): JSX.Element {
 
   const getSortOffers = () => {
     switch (sortType) {
-      case SORT_TYPE[1]:
+      case SortTypes.HighToLow:
         return currentOffers.sort(SortHighToLow);
-      case SORT_TYPE[2]:
+      case SortTypes.LowToHigh:
         return currentOffers.sort(SortLowToHigh);
-      case SORT_TYPE[3]:
+      case SortTypes.TopRatedFirst:
         return currentOffers.sort(SortTopRated);
       default:
         return currentOffers;
@@ -35,16 +35,13 @@ function Main(): JSX.Element {
 
   getSortOffers();
 
-
   const [id, setOffersId] = useState(0);
 
   const handleMouseEnter = (newId: number) => setOffersId(newId);
 
-  const handleSortClick = (sortTypeCheck: string) => dispatch(changeSortType(sortTypeCheck));
-
   const handleCityClick = (city: string) => {
     dispatch(changeCity(city));
-    dispatch(changeSortType(SORT_TYPE[0]));
+    dispatch(changeSortType(SortTypes.Popular));
   };
 
   return (
@@ -67,7 +64,7 @@ function Main(): JSX.Element {
                   {`${currentOffers.length} ${pluralize('place', currentOffers.length)} to stay in ${currentOffers[0].city.name}`}
                 </b>
 
-                <Sort sortTypeCheck={sortType} onSortClick={handleSortClick}/>
+                <Sort sortTypeCheck={sortType} />
 
                 <CardList
                   offers={currentOffers}

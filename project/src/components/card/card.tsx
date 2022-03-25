@@ -1,5 +1,5 @@
-import ButtonBookmark from '../button-bookmark/button-bookmark';
 import {Link} from 'react-router-dom';
+import ButtonBookmark from '../button-bookmark/button-bookmark';
 import {AppRoute} from '../../const';
 import {Offer} from '../../types/offer';
 import {getRatingPercent} from '../../utils/utils';

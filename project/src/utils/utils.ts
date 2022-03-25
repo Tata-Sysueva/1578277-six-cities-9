@@ -13,6 +13,6 @@ export const mapOffersToCities = (offers: Offer[]) =>
     return  acc;
   }, {});
 
-export const SortHighToLow = (a:Offer, b:Offer) => a.price - b.price;
-export const SortLowToHigh = (a:Offer, b:Offer) => b.price - a.price;
-export const SortTopRated = (a:Offer, b:Offer) => b.rating - a.rating;
+export const SortHighToLow = (a: Offer, b: Offer) => a.price - b.price;
+export const SortLowToHigh = (a: Offer, b: Offer) => b.price - a.price;
+export const SortTopRated = (a: Offer, b: Offer) => b.rating - a.rating;

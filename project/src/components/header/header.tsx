@@ -1,5 +1,5 @@
-import UserNav from '../user-nav/user-nav';
 import {Link} from 'react-router-dom';
+import UserNav from '../user-nav/user-nav';
 import {AppRoute} from '../../const';
 
 function Header(): JSX.Element {

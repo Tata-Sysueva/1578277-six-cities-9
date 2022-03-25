@@ -1,5 +1,5 @@
-import {Offer} from '../../types/offer';
 import {useEffect, useRef} from 'react';
+import {Offer} from '../../types/offer';
 import useMap from '../../hooks/use-map';
 import {Icon, layerGroup, Marker} from 'leaflet';
 import {URL_MARKER_CURRENT, URL_MARKER_DEFAULT} from '../../const';
@@ -11,7 +11,7 @@ type MapProps = {
   currentId?:number,
 }
 
-function Map({ className='', offersInCurrentCity, currentId }: MapProps): JSX.Element {
+function Map({className='', offersInCurrentCity, currentId}: MapProps): JSX.Element {
   const [{ city }] = offersInCurrentCity;
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);

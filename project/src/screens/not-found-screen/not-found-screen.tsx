@@ -1,5 +1,5 @@
-import styles from './NotFoundScreen.module.css';
 import {Link} from 'react-router-dom';
+import styles from './NotFoundScreen.module.css';
 import {AppRoute} from '../../const';
 
 function NotFoundScreen(): JSX.Element {
