@@ -13,7 +13,6 @@ function Sort({sortTypeCheck}: SortProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const handleSortListClick = () => !open ? setOpen(true) : setOpen(false);
-  const handleSortClick = () => dispatch(changeSortType(sortTypeCheck));
 
   const sortListClass = classNames(
     'places__options',
@@ -38,7 +37,7 @@ function Sort({sortTypeCheck}: SortProps): JSX.Element {
                 'places__option',
                 {'places__option--active': sortType === sortTypeCheck})}
               tabIndex={0}
-              onClick={() => handleSortClick()}
+              onClick={() => dispatch(changeSortType(sortType))}
               key={sortType}
             >
               {sortType}

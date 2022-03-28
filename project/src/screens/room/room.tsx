@@ -3,7 +3,6 @@ import Header from '../../components/header/header';
 import ReviewForm from '../../components/review-form/review-form';
 import PremiumMark from '../../components/premium-mark/premium-mark';
 import Map from '../../components/map/map';
-import {Offer} from '../../types/offer';
 import NearPlaces from '../../components/near-places/near-places';
 import {ReviewType} from '../../types/review-type';
 import Review from '../../components/review/review';
@@ -12,6 +11,7 @@ import {getRatingPercent} from '../../utils/utils';
 import RoomGallery from '../../components/room-gallery/room-gallery';
 import pluralize from 'pluralize';
 import {offersNear} from '../../mocks/offers-near';
+import {Offer} from '../../types/offer';
 
 type RoomProps = {
   offers: Offer[];
