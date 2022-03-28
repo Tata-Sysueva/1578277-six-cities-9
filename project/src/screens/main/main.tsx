@@ -10,10 +10,14 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {changeCity, changeSortType} from '../../store/action';
 import {SortTypes} from '../../const';
 import {SortHighToLow, SortLowToHigh, SortTopRated} from '../../utils/utils';
+import {Offer} from '../../types/offer';
 
-function Main(): JSX.Element {
+type MainProps = {
+  offers: Offer[],
+}
+
+function Main({offers}: MainProps): JSX.Element {
   const cityName = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
   const sortType = useAppSelector((state) => state.sortType);
   const dispatch = useAppDispatch();
 

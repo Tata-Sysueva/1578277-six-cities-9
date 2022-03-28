@@ -1,7 +1,11 @@
 export const OFFERS_FROM = 0;
 export const OFFERS_TO = 3;
+export const TIMEOUT_SHOW_ERROR = 5000;
+
 export const LAYER_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
 export const COPYRIGHT_MAP = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+export const URL_MARKER_DEFAULT = 'img/pin.svg';
+export const URL_MARKER_CURRENT = 'img/pin-active.svg';
 
 export const RATING_TYPES = [
   {
@@ -44,10 +48,6 @@ export enum Cities {
   Dusseldorf = 'Dusseldorf',
 }
 
-export const URL_MARKER_DEFAULT = 'img/pin.svg';
-
-export const URL_MARKER_CURRENT = 'img/pin-active.svg';
-
 export enum AppRoute {
   Main = '/',
   SignIn = '/login',
@@ -73,4 +73,17 @@ export const SortTypes = {
   LowToHigh: 'Price: low to high',
   HighToLow: 'Price: high to low',
   TopRatedFirst: 'Top rated first',
+};
+
+export enum APIRoute {
+  Offers = '/hotels',
+  Favorites = '/favorite',
+  Login = '/login',
+  Logout = '/logout',
+}
+
+export const HTTP_CODE = {
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  NOT_FOUND: 404,
 };

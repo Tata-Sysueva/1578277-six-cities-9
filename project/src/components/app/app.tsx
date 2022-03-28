@@ -6,22 +6,31 @@ import SingIn from '../../screens/sign-in/sing-in';
 import Room from '../../screens/room/room';
 import NotFoundScreen from '../../screens/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
-import {Offer} from '../../types/offer';
 import {ReviewType} from '../../types/review-type';
+import {useAppSelector} from '../../hooks';
+import Loading from '../loading/loading';
 
 type AppProps = {
-  offers: Offer[];
   reviews: ReviewType[];
 }
 
-function App({offers, reviews}: AppProps): JSX.Element {
+function App({reviews}: AppProps): JSX.Element {
+  const {isDataLoaded} = useAppSelector((state) => state);
+  const offers = useAppSelector((state) => state.offers);
+
+  if (!isDataLoaded) {
+    return (
+      <Loading />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
           element={
-            <Main/>
+            <Main offers={offers}/>
           }
         />
         <Route
