@@ -2,7 +2,11 @@ import {Link} from 'react-router-dom';
 import UserNav from '../user-nav/user-nav';
 import {AppRoute} from '../../const';
 
-function Header(): JSX.Element {
+type HeaderProps = {
+  authorizationStatus: string,
+}
+
+function Header({authorizationStatus}: HeaderProps): JSX.Element {
   return (
     <header className="header">
       <div className="container">
@@ -22,7 +26,7 @@ function Header(): JSX.Element {
             </Link>
           </div>
 
-          <UserNav />
+          <UserNav authorizationStatus={authorizationStatus} />
 
         </div>
       </div>

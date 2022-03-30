@@ -3,12 +3,11 @@ import {RouteProps} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 
 type PrivateRouteProps = RouteProps & {
-  authorizationStatus: AuthorizationStatus;
+  authorizationStatus: string;
   children: JSX.Element;
 }
 
 function PrivateRoute({authorizationStatus, children} : PrivateRouteProps): JSX.Element {
-
   return (
     authorizationStatus === AuthorizationStatus.Auth
       ? children

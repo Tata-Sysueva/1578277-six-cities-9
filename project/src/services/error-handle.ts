@@ -26,7 +26,7 @@ export const errorHandle = (error: ErrorType): void => {
         toast.error(`${response.data.error} Something went wrong. Try again`);
         break;
       case HTTP_CODE.UNAUTHORIZED:
-        toast.info(`You need to login. Error: ${response.data.error}`);
+        toast.info('You need to login!');
         break;
       case HTTP_CODE.NOT_FOUND:
         toast.error(`${response.data.error} Something went wrong. Try again`);

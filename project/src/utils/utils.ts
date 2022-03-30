@@ -1,4 +1,5 @@
 import {Offer} from '../types/offer';
+import {AuthorizationStatus} from '../const';
 
 export const getRatingPercent = (rating: number): number =>  Math.round((rating * 100)/5);
 
@@ -16,3 +17,6 @@ export const mapOffersToCities = (offers: Offer[]) =>
 export const SortHighToLow = (a: Offer, b: Offer) => a.price - b.price;
 export const SortLowToHigh = (a: Offer, b: Offer) => b.price - a.price;
 export const SortTopRated = (a: Offer, b: Offer) => b.rating - a.rating;
+
+export const isCheckedAuth = (authorizationStatus: string): boolean =>
+  authorizationStatus === AuthorizationStatus.Unknown;

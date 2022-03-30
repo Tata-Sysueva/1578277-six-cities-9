@@ -1,4 +1,5 @@
 import {createAction} from '@reduxjs/toolkit';
+import {AuthorizationStatus} from '../const';
 
 export const changeCity = createAction('changeCity', (city) => ({payload: city}));
 
@@ -8,4 +9,4 @@ export const loadOffers = createAction('loadOffers', (data) => ({payload: data})
 
 //export const loadOfferId = createAction('loadOfferId', (data) => ({payload: data}));
 
-export const setError = createAction<string>('setError');
+export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');

@@ -77,9 +77,9 @@ export const SortTypes = {
 
 export enum APIRoute {
   Offers = '/hotels',
-  Favorites = '/favorite',
   Login = '/login',
   Logout = '/logout',
+  Favorites = '/favorite',
 }
 
 export const HTTP_CODE = {
