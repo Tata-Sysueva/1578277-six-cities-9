@@ -1,8 +1,7 @@
 import {Link} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {logoutAction} from '../../store/api-actions';
-import {useAppDispatch} from '../../hooks';
-import {getEmail} from '../../services/email';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 
 type UserNavProps = {
   authorizationStatus: string,
@@ -10,12 +9,12 @@ type UserNavProps = {
 
 function UserNav({authorizationStatus}: UserNavProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
+  const email = user.email;
 
   const handleSingOut = () => {
     dispatch(logoutAction());
   };
-
-  const email = getEmail();
 
   return (
     <nav className="header__nav">
@@ -28,8 +27,7 @@ function UserNav({authorizationStatus}: UserNavProps): JSX.Element {
                   className="header__nav-link header__nav-link--profile"
                   to={AppRoute.Favorites}
                 >
-                  <div className="header__avatar-wrapper user__avatar-wrapper">
-                  </div>
+                  <div className="header__avatar-wrapper user__avatar-wrapper" />
                   <span className="header__user-name user__name">{email}</span>
                 </Link>
               </li>

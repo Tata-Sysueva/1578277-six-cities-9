@@ -1,35 +1,19 @@
-import {Link} from 'react-router-dom';
-import {AppRoute, TIMEOUT_SHOW_ERROR} from '../../const';
+import {Link, Navigate} from 'react-router-dom';
+import {AppRoute, EMAIL_PATTERN, Messages, PASSWORD_PATTERN} from '../../const';
 import {FormEvent, useRef, useState} from 'react';
 import {useAppDispatch} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
-import {AuthData} from '../../types/auth-data';
 import {toast} from 'react-toastify';
-import FormSend from '../../components/form-send/form-send';
 
 function SingIn(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const [isSuccessSend, setSuccessSend] = useState(false);
+  const [isEmailValidity, setEmailValidity] = useState(true);
+  const [isPasswordValidity, setPasswordValidity] = useState(true);
+
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
-  const dispatch = useAppDispatch();
-
-  const [isSuccessSend, setState] = useState(false);
-
-  const onSubmit = (authData: AuthData) => {
-    dispatch(loginAction(authData));
-    setState(true);
-  };
-
-  toast.configure({
-    position: toast.POSITION.TOP_CENTER,
-    autoClose: TIMEOUT_SHOW_ERROR,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-  });
-
-  const pattern = /^(?=.*[0-9])(?=.*[a-z])/i;
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -40,20 +24,34 @@ function SingIn(): JSX.Element {
       passwordRef.current !== null &&
       form.checkValidity()
     ) {
-      onSubmit({
+      dispatch(loginAction({
         email: emailRef.current.value,
         password: passwordRef.current.value,
-      });
-      toast('Successful!');
+      }));
+      setSuccessSend(true);
+      toast(Messages.LoggedIn);
     }
   };
 
-  const handleInputChange = () => {
-    if (passwordRef.current !== null) {
-      if (pattern.test(passwordRef.current.value)) {
-        passwordRef.current.setCustomValidity(' ');
+  const handleEmailChange = () => {
+    if (emailRef.current !== null) {
+      if (EMAIL_PATTERN.test(emailRef.current.value)) {
+        emailRef.current.setCustomValidity('');
+        setEmailValidity(false);
       } else {
-        passwordRef.current.setCustomValidity('Invalid password. You need letters and numbers');
+        emailRef.current.setCustomValidity(Messages.EmailError);
+      }
+      emailRef.current.reportValidity();
+    }
+  };
+
+  const handlePasswordChange = () => {
+    if (passwordRef.current !== null) {
+      if (PASSWORD_PATTERN.test(passwordRef.current.value)) {
+        passwordRef.current.setCustomValidity('');
+        setPasswordValidity(false);
+      } else {
+        passwordRef.current.setCustomValidity(Messages.PasswordError);
       }
       passwordRef.current.reportValidity();
     }
@@ -86,7 +84,7 @@ function SingIn(): JSX.Element {
         <div className="page__login-container container">
           <section className="login">
             {isSuccessSend ?
-              <FormSend /> :
+              <Navigate to={AppRoute.Main} /> :
               <>
                 <h1 className="login__title">Sign in</h1>
                 <form
@@ -102,6 +100,7 @@ function SingIn(): JSX.Element {
                       className="login__input form__input"
                       type="email" name="email"
                       placeholder="Email"
+                      onChange={handleEmailChange}
                       required
                     />
                   </div>
@@ -115,10 +114,16 @@ function SingIn(): JSX.Element {
                       id="password"
                       placeholder="Password"
                       required
-                      onChange={handleInputChange}
+                      onChange={handlePasswordChange}
                     />
                   </div>
-                  <button className="login__submit form__submit button" type="submit">Sign in</button>
+                  <button
+                    className="login__submit form__submit button"
+                    type="submit"
+                    disabled={isEmailValidity || isPasswordValidity}
+                  >
+                    Sign in
+                  </button>
                 </form>
               </>}
           </section>

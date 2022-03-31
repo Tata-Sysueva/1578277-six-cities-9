@@ -6,6 +6,8 @@ export const LAYER_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/
 export const COPYRIGHT_MAP = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 export const URL_MARKER_DEFAULT = 'img/pin.svg';
 export const URL_MARKER_CURRENT = 'img/pin-active.svg';
+export const PASSWORD_PATTERN = /^(?=.*[0-9])(?=.*[a-z])/i;
+export const EMAIL_PATTERN = /^[A-Za-z0-9][A-Za-z0-9-_]*[A-Za-z0-9]*@([A-Za-z0-9]+([A-Za-z0-9-]*[A-Za-z0-9]+)*\.)+[A-Za-z]*$/;
 
 export const RATING_TYPES = [
   {
@@ -87,3 +89,9 @@ export const HTTP_CODE = {
   UNAUTHORIZED: 401,
   NOT_FOUND: 404,
 };
+
+export enum Messages {
+  LoggedIn = 'You have successfully logged in!',
+  EmailError = 'Invalid email. You need email like example@example.com',
+  PasswordError = 'Invalid password. You need letters and numbers',
+}

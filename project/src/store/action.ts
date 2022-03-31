@@ -10,3 +10,5 @@ export const loadOffers = createAction('loadOffers', (data) => ({payload: data})
 //export const loadOfferId = createAction('loadOfferId', (data) => ({payload: data}));
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
+
+export const changeUser = createAction('user/getUserInfo', (data) => ({payload: data}));

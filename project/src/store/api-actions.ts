@@ -2,12 +2,11 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api, store} from './index';
 import {APIRoute, AuthorizationStatus} from '../const';
 import {Offer} from '../types/offer';
-import {loadOffers, requireAuthorization} from './action';
+import {changeUser, loadOffers, requireAuthorization} from './action';
 import {errorHandle} from '../services/error-handle';
-import {dropToken, saveToken} from '../services/token';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
-import {dropEmail, saveEmail} from '../services/email';
+import {dropToken, saveToken} from '../services/token';
 
 export const fetchOffersAction = createAsyncThunk(
   'data/fetchOffers',
@@ -38,9 +37,9 @@ export const loginAction = createAsyncThunk(
   'user/login',
   async ({email: email, password}: AuthData) => {
     try {
-      const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
-      saveToken(token);
-      saveEmail(email);
+      const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
+      saveToken(data.token);
+      store.dispatch(changeUser(data));
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch (error) {
       errorHandle(error);
@@ -55,7 +54,7 @@ export const logoutAction = createAsyncThunk(
     try {
       await api.delete(APIRoute.Logout);
       dropToken();
-      dropEmail();
+      store.dispatch(changeUser({}));
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     } catch (error) {
       errorHandle(error);

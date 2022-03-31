@@ -32,7 +32,7 @@ function App({reviews}: AppProps): JSX.Element {
         <Route
           path={AppRoute.Main}
           element={
-            <Main
+            < Main
               offers={offers}
               authorizationStatus={authorizationStatus}
             />
