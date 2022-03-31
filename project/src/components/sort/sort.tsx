@@ -22,7 +22,7 @@ function Sort({sortTypeCheck}: SortProps): JSX.Element {
 
   return (
     <form className="places__sorting" action="#" method="get" onClick={handleSortListClick}>
-      <span className="places__sorting-caption">Sort by</span>
+      <span className="places__sorting-caption">Sort by &nbsp;</span>
       <span className="places__sorting-type" tabIndex={0}>
         {sortTypeCheck}
         <svg className="places__sorting-arrow" width="7" height="4">

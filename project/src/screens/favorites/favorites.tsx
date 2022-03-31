@@ -7,16 +7,17 @@ import FavoritesListEmpty from '../../components/favorites-list-empty/favorites-
 
 type FavoritesProps = {
   offers: Offer[],
+  authorizationStatus: string,
 }
 
-function Favorites({offers}: FavoritesProps): JSX.Element {
+function Favorites({offers, authorizationStatus}: FavoritesProps): JSX.Element {
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
   const isEmpty = favoriteOffers.length <= 0;
   const groupFavoriteOffers = Object.entries(mapOffersToCities(favoriteOffers));
 
   return (
     <div className={`page ${isEmpty && 'page--favorites-empty'}`}>
-      <Header />
+      <Header authorizationStatus={authorizationStatus}/>
 
       <main className={`page__main page__main--favorites ${isEmpty && 'page__main--favorites-empty'}`}>
         <div className="page__favorites-container container">

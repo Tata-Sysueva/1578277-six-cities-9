@@ -14,9 +14,10 @@ import {Offer} from '../../types/offer';
 
 type MainProps = {
   offers: Offer[],
+  authorizationStatus: string,
 }
 
-function Main({offers}: MainProps): JSX.Element {
+function Main({offers, authorizationStatus}: MainProps): JSX.Element {
   const cityName = useAppSelector((state) => state.city);
   const sortType = useAppSelector((state) => state.sortType);
   const dispatch = useAppDispatch();
@@ -51,7 +52,7 @@ function Main({offers}: MainProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
 
-      <Header />
+      <Header authorizationStatus={authorizationStatus}/>
 
       <main className={`page__main page__main--index ${isEmpty && 'page__main--index-empty'}`}>
         <h1 className="visually-hidden">Cities</h1>

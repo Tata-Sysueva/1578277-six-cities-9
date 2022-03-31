@@ -16,9 +16,10 @@ import {Offer} from '../../types/offer';
 type RoomProps = {
   offers: Offer[];
   reviews: ReviewType[];
+  authorizationStatus: string,
 };
 
-function Room({offers, reviews}: RoomProps ): JSX.Element {
+function Room({offers, reviews, authorizationStatus}: RoomProps ): JSX.Element {
   const params = useParams();
   const paramsId = params.id;
   const cardId = Number(paramsId);
@@ -48,7 +49,7 @@ function Room({offers, reviews}: RoomProps ): JSX.Element {
 
   return (
     <div className="page">
-      <Header />
+      <Header authorizationStatus={authorizationStatus}/>
 
       <main className="page__main page__main--property">
         <section className="property">

@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom';
 import ButtonBookmark from '../button-bookmark/button-bookmark';
 import {AppRoute} from '../../const';
 import {Offer} from '../../types/offer';
-import {getRatingPercent} from '../../utils/utils';
+import {getRatingPercent, uppercaseFirstLetter} from '../../utils/utils';
 import PremiumMark from '../premium-mark/premium-mark';
 
 type CardProps = {
@@ -79,7 +79,7 @@ function Card(
             {title}
           </Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{uppercaseFirstLetter(type)}</p>
       </div>
     </article>
   );
