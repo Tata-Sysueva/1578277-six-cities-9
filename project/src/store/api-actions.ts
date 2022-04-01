@@ -2,11 +2,21 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api, store} from './index';
 import {APIRoute, AuthorizationStatus} from '../const';
 import {Offer} from '../types/offer';
-import {changeUser, loadOffers, requireAuthorization} from './action';
+import {
+  addComment,
+  changeUser,
+  loadOffer,
+  loadOffers,
+  loadOffersNear,
+  loadReviews,
+  requireAuthorization
+} from './action';
 import {errorHandle} from '../services/error-handle';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
 import {dropToken, saveToken} from '../services/token';
+import {ReviewType} from '../types/review-type';
+import {CommentInfo} from '../types/comment';
 
 export const fetchOffersAction = createAsyncThunk(
   'data/fetchOffers',
@@ -14,6 +24,42 @@ export const fetchOffersAction = createAsyncThunk(
     try {
       const {data} = await api.get<Offer[]>(APIRoute.Offers);
       store.dispatch(loadOffers(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchOfferAction = createAsyncThunk(
+  'data/fetchOffer',
+  async (id:number) => {
+    try {
+      const {data} = await api.get<Offer>(`${APIRoute.Offer}${id}`);
+      store.dispatch(loadOffer(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchOffersNearAction = createAsyncThunk(
+  'data/fetchOffersNear',
+  async (id:number) => {
+    try {
+      const {data} = await api.get<Offer>(`${APIRoute.Offer}${id}/nearby`);
+      store.dispatch(loadOffersNear(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchReviews = createAsyncThunk(
+  'data/fetchReviews',
+  async (id:number) => {
+    try {
+      const {data} = await api.get<ReviewType>(`${APIRoute.Comments}${id}`);
+      store.dispatch(loadReviews(data));
     } catch (error) {
       errorHandle(error);
     }
@@ -62,14 +108,14 @@ export const logoutAction = createAsyncThunk(
   },
 );
 
-// export const fetchOfferIdAction = createAsyncThunk(
-//   'data/fetchOfferId',
-//   async () => {
-//     try {
-//       const {data} = await api.get<Offer[]>(APIRoute.Offers);
-//       store.dispatch(loadOfferId(data));
-//     } catch (error) {
-//       errorHandle(error);
-//     }
-//   },
-// );
+export const postCommentsAction = createAsyncThunk(
+  'addComment',
+  async ({comment: comment, rating, id}: CommentInfo) => {
+    try {
+      const {data} = await api.post<CommentInfo>(`${APIRoute.Comments}${id}`, {comment, rating});
+      store.dispatch(addComment(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
