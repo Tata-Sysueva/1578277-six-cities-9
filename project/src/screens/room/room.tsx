@@ -4,27 +4,42 @@ import ReviewForm from '../../components/review-form/review-form';
 import PremiumMark from '../../components/premium-mark/premium-mark';
 import Map from '../../components/map/map';
 import NearPlaces from '../../components/near-places/near-places';
-import {ReviewType} from '../../types/review-type';
 import Review from '../../components/review/review';
 import {AuthorizationStatus} from '../../const';
-import {getRatingPercent} from '../../utils/utils';
+import {getRatingPercent, uppercaseFirstLetter} from '../../utils/utils';
 import RoomGallery from '../../components/room-gallery/room-gallery';
 import pluralize from 'pluralize';
-import {offersNear} from '../../mocks/offers-near';
-import {Offer} from '../../types/offer';
+import {useAppSelector} from '../../hooks';
+import {store} from '../../store';
+import {useEffect} from 'react';
+import {fetchOfferAction, fetchOffersNearAction, fetchReviews} from '../../store/api-actions';
+import Loading from '../../components/loading/loading';
 
 type RoomProps = {
-  offers: Offer[];
-  reviews: ReviewType[];
   authorizationStatus: string,
 };
 
-function Room({offers, reviews, authorizationStatus}: RoomProps ): JSX.Element {
+function Room({authorizationStatus}: RoomProps ): JSX.Element {
+  const curOffer = useAppSelector((state) => state.offer);
+  const offersNear = useAppSelector((state) => state.offersNear);
+  const reviews = useAppSelector((state) => state.reviews);
+  const isDataOfferLoaded = useAppSelector((state) => state);
+
   const params = useParams();
   const paramsId = params.id;
   const cardId = Number(paramsId);
-  const curOffer = offers.filter((offer) => offer.id === cardId);
-  const [ offerInfo ] = curOffer;
+
+  useEffect(() => {
+    store.dispatch(fetchOfferAction(cardId));
+    store.dispatch(fetchOffersNearAction(cardId));
+    store.dispatch(fetchReviews(cardId));
+  }, [cardId, reviews]);
+
+  if (!curOffer || !isDataOfferLoaded) {
+    return (
+      <Loading />
+    );
+  }
 
   const {
     id,
@@ -39,13 +54,13 @@ function Room({offers, reviews, authorizationStatus}: RoomProps ): JSX.Element {
     host,
     isPremium,
     images,
-  } = offerInfo;
+  } = curOffer;
 
   const {
     avatarUrl,
     name,
+    isPro,
   } = host;
-
 
   return (
     <div className="page">
@@ -81,7 +96,7 @@ function Room({offers, reviews, authorizationStatus}: RoomProps ): JSX.Element {
 
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {type}
+                  {uppercaseFirstLetter(type)}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {bedrooms} {pluralize('Bedroom', bedrooms)}
@@ -109,7 +124,7 @@ function Room({offers, reviews, authorizationStatus}: RoomProps ): JSX.Element {
                     className={`
                       property__avatar-wrapper
                       user__avatar-wrapper
-                      ${isPremium && 'property__avatar-wrapper--pro'}
+                      ${isPro && 'property__avatar-wrapper--pro'}
                     `}
                   >
                     <img
@@ -123,7 +138,7 @@ function Room({offers, reviews, authorizationStatus}: RoomProps ): JSX.Element {
                   <span className="property__user-name">
                     {name}
                   </span>
-                  {isPremium &&
+                  {isPro &&
                     <span className="property__user-status">
                       Pro
                     </span>}
@@ -145,7 +160,7 @@ function Room({offers, reviews, authorizationStatus}: RoomProps ): JSX.Element {
                   {reviews.map((review) => <Review key={review.id} review={review}/>)}
                 </ul>
 
-                {AuthorizationStatus.Auth && <ReviewForm /> }
+                {authorizationStatus === AuthorizationStatus.Auth ? <ReviewForm /> : '' }
 
               </section>
             </div>
@@ -153,7 +168,7 @@ function Room({offers, reviews, authorizationStatus}: RoomProps ): JSX.Element {
 
           <Map
             className="property__map"
-            offersInCurrentCity={offersNear}
+            offersInCurrentCity={offersNear.concat(curOffer)}
             currentId={id}
           />
         </section>

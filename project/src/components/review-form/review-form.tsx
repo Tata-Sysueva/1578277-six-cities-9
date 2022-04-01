@@ -1,24 +1,49 @@
-import {ChangeEvent, useState} from 'react';
-import {RATING_TYPES} from '../../const';
+import {ChangeEvent, FormEvent, useState} from 'react';
+import {Messages, RATING_TYPES} from '../../const';
 import ReviewRating from '../review-rating/review-rating';
+import {postCommentsAction} from '../../store/api-actions';
+import {toast} from 'react-toastify';
+import {useAppDispatch} from '../../hooks';
+import {useParams} from 'react-router-dom';
 
 function ReviewForm(): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  const params = useParams();
+  const paramsId = params.id;
+  const cardId = Number(paramsId);
+
   const [formData, setFormData] = useState({
-    rating: '',
-    review: '',
+    comment: '',
+    rating: 0,
+    id: cardId,
   });
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (formData !== null) {
+      dispatch(postCommentsAction(formData));
+      toast(Messages.AddComment);
+    }
+  };
 
   const handleChange = (evt: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const {name, value} = evt.target;
     setFormData({...formData, [name]: value});
   };
 
-  const isShort = formData.review.length <= 50;
-  const isLong = formData.review.length > 300;
+  const isShort = formData.comment.length <= 50;
+  const isLong = formData.comment.length > 300;
   const isCheck = Number(formData.rating) < 1;
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form
+      className="reviews__form form"
+      action="#"
+      method="post"
+      onSubmit={handleSubmit}
+    >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {RATING_TYPES.map((ratingType) =>
@@ -35,10 +60,10 @@ function ReviewForm(): JSX.Element {
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
-        name="review"
+        name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleChange}
-        value={formData.review}
+        value={formData.comment}
       >
       </textarea>
       <div className="reviews__button-wrapper">

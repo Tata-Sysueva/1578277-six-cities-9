@@ -81,6 +81,8 @@ export enum APIRoute {
   Offers = '/hotels',
   Login = '/login',
   Logout = '/logout',
+  Offer = '/hotels/',
+  Comments = '/comments/',
   Favorites = '/favorite',
 }
 
@@ -94,4 +96,5 @@ export enum Messages {
   LoggedIn = 'You have successfully logged in!',
   EmailError = 'Invalid email. You need email like example@example.com',
   PasswordError = 'Invalid password. You need letters and numbers',
+  AddComment = 'You have successfully added comment'
 }
