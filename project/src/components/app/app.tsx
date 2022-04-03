@@ -9,11 +9,13 @@ import PrivateRoute from '../private-route/private-route';
 import {useAppSelector} from '../../hooks';
 import Loading from '../loading/loading';
 import {isCheckedAuth} from '../../utils/utils';
+import {getLoadedDataStatus, getOffers} from '../../store/load-data/selectors';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
 function App(): JSX.Element {
-  const offers = useAppSelector(({DATA}) => DATA.offers);
-  const authorizationStatus = useAppSelector(({USER}) => USER.authorizationStatus);
-  const isDataLoaded = useAppSelector(({DATA}) => DATA);
+  const offers = useAppSelector(getOffers);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isDataLoaded = useAppSelector(getLoadedDataStatus);
 
 
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {

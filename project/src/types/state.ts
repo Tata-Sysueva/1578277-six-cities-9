@@ -1,6 +1,6 @@
 import {store} from '../store';
 import {AuthorizationStatus} from '../const';
-import {UserInfo} from './userInfo';
+import {UserInfo} from './user-info';
 import {Offer} from './offer';
 import {ReviewType} from './review-type';
 import {CommentInfo} from './comment';

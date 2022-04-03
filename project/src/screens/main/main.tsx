@@ -11,6 +11,7 @@ import {SortTypes} from '../../const';
 import {SortHighToLow, SortLowToHigh, SortTopRated} from '../../utils/utils';
 import {Offer} from '../../types/offer';
 import {changeCity, changeSortType} from '../../store/use-site/use-site';
+import {getCityName, getSortType} from '../../store/use-site/selectors';
 
 type MainProps = {
   offers: Offer[],
@@ -18,8 +19,8 @@ type MainProps = {
 }
 
 function Main({offers, authorizationStatus}: MainProps): JSX.Element {
-  const cityName = useAppSelector(({USE_SITE}) => USE_SITE.city);
-  const sortType = useAppSelector(({USE_SITE}) => USE_SITE.sortType);
+  const cityName = useAppSelector(getCityName);
+  const sortType = useAppSelector(getSortType);
   const dispatch = useAppDispatch();
 
   const currentOffers = offers.filter((offer) => offer.city.name === cityName);
