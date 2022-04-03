@@ -20,10 +20,7 @@ type RoomProps = {
 };
 
 function Room({authorizationStatus}: RoomProps ): JSX.Element {
-  const curOffer = useAppSelector((state) => state.offer);
-  const offersNear = useAppSelector((state) => state.offersNear);
-  const reviews = useAppSelector((state) => state.reviews);
-  const isDataOfferLoaded = useAppSelector((state) => state);
+  const {offer, offersNear, reviews, isDataOfferLoaded} = useAppSelector(({DATA}) => DATA);
 
   const params = useParams();
   const paramsId = params.id;
@@ -35,7 +32,7 @@ function Room({authorizationStatus}: RoomProps ): JSX.Element {
     store.dispatch(fetchReviews(cardId));
   }, [cardId, reviews]);
 
-  if (!curOffer || !isDataOfferLoaded) {
+  if (!offer || !isDataOfferLoaded) {
     return (
       <Loading />
     );
@@ -54,7 +51,7 @@ function Room({authorizationStatus}: RoomProps ): JSX.Element {
     host,
     isPremium,
     images,
-  } = curOffer;
+  } = offer;
 
   const {
     avatarUrl,
@@ -168,7 +165,7 @@ function Room({authorizationStatus}: RoomProps ): JSX.Element {
 
           <Map
             className="property__map"
-            offersInCurrentCity={offersNear.concat(curOffer)}
+            offersInCurrentCity={offersNear.concat(offer)}
             currentId={id}
           />
         </section>

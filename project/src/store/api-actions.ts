@@ -2,21 +2,15 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api, store} from './index';
 import {APIRoute, AuthorizationStatus} from '../const';
 import {Offer} from '../types/offer';
-import {
-  addComment,
-  changeUser,
-  loadOffer,
-  loadOffers,
-  loadOffersNear,
-  loadReviews,
-  requireAuthorization
-} from './action';
 import {errorHandle} from '../services/error-handle';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
 import {dropToken, saveToken} from '../services/token';
 import {ReviewType} from '../types/review-type';
 import {CommentInfo} from '../types/comment';
+import {loadOffer, loadOffers, loadOffersNear, loadReviews} from './load-data/load-data';
+import {changeUser, requireAuthorization} from './user-process/user-process';
+import {addComment} from './use-site/use-site';
 
 export const fetchOffersAction = createAsyncThunk(
   'data/fetchOffers',

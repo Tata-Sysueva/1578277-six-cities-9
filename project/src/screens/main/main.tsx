@@ -7,10 +7,10 @@ import MainEmpty from '../../components/main-empty/main-empty';
 import pluralize from 'pluralize';
 import {useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {changeCity, changeSortType} from '../../store/action';
 import {SortTypes} from '../../const';
 import {SortHighToLow, SortLowToHigh, SortTopRated} from '../../utils/utils';
 import {Offer} from '../../types/offer';
+import {changeCity, changeSortType} from '../../store/use-site/use-site';
 
 type MainProps = {
   offers: Offer[],
@@ -18,8 +18,8 @@ type MainProps = {
 }
 
 function Main({offers, authorizationStatus}: MainProps): JSX.Element {
-  const cityName = useAppSelector((state) => state.city);
-  const sortType = useAppSelector((state) => state.sortType);
+  const cityName = useAppSelector(({USE_SITE}) => USE_SITE.city);
+  const sortType = useAppSelector(({USE_SITE}) => USE_SITE.sortType);
   const dispatch = useAppDispatch();
 
   const currentOffers = offers.filter((offer) => offer.city.name === cityName);

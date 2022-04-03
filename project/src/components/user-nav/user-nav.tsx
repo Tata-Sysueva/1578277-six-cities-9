@@ -2,6 +2,7 @@ import {Link} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {logoutAction} from '../../store/api-actions';
 import {useAppDispatch, useAppSelector} from '../../hooks';
+import {useState} from 'react';
 
 type UserNavProps = {
   authorizationStatus: string,
@@ -9,18 +10,21 @@ type UserNavProps = {
 
 function UserNav({authorizationStatus}: UserNavProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useAppSelector(({USER}) => USER.user);
   const email = user.email;
+
+  const [isLogged, setLogged] = useState(true);
 
   const handleSingOut = () => {
     dispatch(logoutAction());
+    setLogged(false);
   };
 
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">
         {
-          authorizationStatus === AuthorizationStatus.Auth ?
+          authorizationStatus === AuthorizationStatus.Auth && isLogged ?
             <>
               <li className="header__nav-item user">
                 <Link

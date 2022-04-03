@@ -11,9 +11,10 @@ import Loading from '../loading/loading';
 import {isCheckedAuth} from '../../utils/utils';
 
 function App(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
+  const offers = useAppSelector(({DATA}) => DATA.offers);
+  const authorizationStatus = useAppSelector(({USER}) => USER.authorizationStatus);
+  const isDataLoaded = useAppSelector(({DATA}) => DATA);
 
-  const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
 
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (

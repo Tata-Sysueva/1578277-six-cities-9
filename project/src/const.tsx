@@ -98,3 +98,9 @@ export enum Messages {
   PasswordError = 'Invalid password. You need letters and numbers',
   AddComment = 'You have successfully added comment'
 }
+
+export enum NameSpace {
+  Data = 'DATA',
+  UseSite = 'USE_SITE',
+  User = 'USER',
+}
