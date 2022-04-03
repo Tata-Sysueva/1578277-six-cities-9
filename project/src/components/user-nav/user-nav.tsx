@@ -3,6 +3,7 @@ import {AppRoute, AuthorizationStatus} from '../../const';
 import {logoutAction} from '../../store/api-actions';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {useState} from 'react';
+import {getUser} from '../../store/user-process/selectors';
 
 type UserNavProps = {
   authorizationStatus: string,
@@ -10,7 +11,7 @@ type UserNavProps = {
 
 function UserNav({authorizationStatus}: UserNavProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const user = useAppSelector(({USER}) => USER.user);
+  const user = useAppSelector(getUser);
   const email = user.email;
 
   const [isLogged, setLogged] = useState(true);
