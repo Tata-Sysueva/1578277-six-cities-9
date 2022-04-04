@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {SORT_TYPES} from '../../const';
 import classNames from 'classnames';
 import {useAppDispatch} from '../../hooks';
-import {changeSortType} from '../../store/use-site/use-site';
+import {changeSortType} from '../../store/app/app';
 
 type SortProps = {
   sortTypeCheck: string,

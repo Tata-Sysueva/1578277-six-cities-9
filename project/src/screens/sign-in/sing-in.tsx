@@ -1,9 +1,10 @@
-import {Link, Navigate} from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 import {AppRoute, EMAIL_PATTERN, Messages, PASSWORD_PATTERN} from '../../const';
 import {FormEvent, useRef, useState} from 'react';
 import {useAppDispatch} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
 import {toast} from 'react-toastify';
+import Header from '../../components/header/header';
 
 function SingIn(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -59,26 +60,7 @@ function SingIn(): JSX.Element {
 
   return  (
     <div className="page page--gray page--login">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Link
-                className="header__logo-link"
-                to={AppRoute.Main}
-              >
-                <img
-                  className="header__logo"
-                  src="img/logo.svg"
-                  alt="6 cities logo"
-                  width="81"
-                  height="41"
-                />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header isAuthorizations={false} />
 
       <main className="page__main page__main--login">
         <div className="page__login-container container">

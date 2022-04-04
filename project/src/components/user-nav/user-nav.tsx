@@ -6,13 +6,13 @@ import {useState} from 'react';
 import {getUser} from '../../store/user-process/selectors';
 
 type UserNavProps = {
-  authorizationStatus: string,
+  authorizationStatus?: string,
 }
 
 function UserNav({authorizationStatus}: UserNavProps): JSX.Element {
   const dispatch = useAppDispatch();
   const user = useAppSelector(getUser);
-  const email = user.email;
+  const email = user?.email;
 
   const [isLogged, setLogged] = useState(true);
 

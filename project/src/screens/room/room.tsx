@@ -61,7 +61,7 @@ function Room({authorizationStatus}: RoomProps ): JSX.Element {
 
   return (
     <div className="page">
-      <Header authorizationStatus={authorizationStatus}/>
+      <Header authorizationStatus={authorizationStatus} isAuthorizations/>
 
       <main className="page__main page__main--property">
         <section className="property">
@@ -157,7 +157,7 @@ function Room({authorizationStatus}: RoomProps ): JSX.Element {
                   {reviews.map((review) => <Review key={review.id} review={review}/>)}
                 </ul>
 
-                {authorizationStatus === AuthorizationStatus.Auth ? <ReviewForm /> : '' }
+                {authorizationStatus === AuthorizationStatus.Auth ? <ReviewForm cardId={cardId} /> : '' }
 
               </section>
             </div>

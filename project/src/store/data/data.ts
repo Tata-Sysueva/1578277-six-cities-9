@@ -1,23 +1,33 @@
-import {LoadData} from '../../types/state';
 import {NameSpace} from '../../const';
 import {createSlice} from '@reduxjs/toolkit';
+import {Offer} from '../../types/offer';
+import {ReviewType} from '../../types/review-type';
 
-const initialState: LoadData = {
+type Data = {
+  offers: Offer[],
+  offer: Offer | null,
+  isLoadedStatus: boolean,
+  offersNear: Offer[],
+  reviews: ReviewType[],
+  isDataOfferLoaded: boolean,
+};
+
+const initialState: Data = {
   offers: [],
-  isDataLoaded: false,
+  isLoadedStatus: false,
   offer: null,
   offersNear: [],
   reviews: [],
   isDataOfferLoaded: false,
 };
 
-export const loadData = createSlice({
+export const data = createSlice({
   name: NameSpace.Data,
   initialState,
   reducers: {
     loadOffers: (state, action) => {
       state.offers = action.payload;
-      state.isDataLoaded = true;
+      state.isLoadedStatus = true;
     },
     loadOffer: (state, action) => {
       state.offer = action.payload;
@@ -32,4 +42,9 @@ export const loadData = createSlice({
   },
 });
 
-export const {loadOffers, loadOffer, loadOffersNear, loadReviews} = loadData.actions;
+export const {
+  loadOffers,
+  loadOffer,
+  loadOffersNear,
+  loadReviews,
+} = data.actions;

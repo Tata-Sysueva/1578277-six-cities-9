@@ -8,9 +8,9 @@ import {UserData} from '../types/user-data';
 import {dropToken, saveToken} from '../services/token';
 import {ReviewType} from '../types/review-type';
 import {CommentInfo} from '../types/comment';
-import {loadOffer, loadOffers, loadOffersNear, loadReviews} from './load-data/load-data';
+import {loadOffer, loadOffers, loadOffersNear, loadReviews} from './data/data';
 import {changeUser, requireAuthorization} from './user-process/user-process';
-import {addComment} from './use-site/use-site';
+import {addComment, isPostSuccess} from './app/app';
 
 export const fetchOffersAction = createAsyncThunk(
   'data/fetchOffers',
@@ -108,6 +108,7 @@ export const postCommentsAction = createAsyncThunk(
     try {
       const {data} = await api.post<CommentInfo>(`${APIRoute.Comments}${id}`, {comment, rating});
       store.dispatch(addComment(data));
+      store.dispatch(isPostSuccess(true));
     } catch (error) {
       errorHandle(error);
     }

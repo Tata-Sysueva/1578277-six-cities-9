@@ -1,17 +1,17 @@
-import {ChangeEvent, FormEvent, useState} from 'react';
-import {Messages, RATING_TYPES} from '../../const';
+import {ChangeEvent, FormEvent, useEffect, useState} from 'react';
+import {MAX_LENGTH, MIN_LENGTH, MIN_RATING, RATING_TYPES} from '../../const';
 import ReviewRating from '../review-rating/review-rating';
 import {postCommentsAction} from '../../store/api-actions';
-import {toast} from 'react-toastify';
-import {useAppDispatch} from '../../hooks';
-import {useParams} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {getPostSuccess} from '../../store/app/selectors';
 
-function ReviewForm(): JSX.Element {
+type ReviewFormProps = {
+  cardId: number,
+}
+
+function ReviewForm({ cardId }: ReviewFormProps): JSX.Element {
   const dispatch = useAppDispatch();
-
-  const params = useParams();
-  const paramsId = params.id;
-  const cardId = Number(paramsId);
+  const isPostSuccess = useAppSelector(getPostSuccess);
 
   const [formData, setFormData] = useState({
     comment: '',
@@ -19,12 +19,21 @@ function ReviewForm(): JSX.Element {
     id: cardId,
   });
 
+  const resetForm = () => {
+    setFormData({
+      ...formData,
+      comment: '',
+      rating: 0,
+    });
+  };
+
+  useEffect(resetForm, [isPostSuccess]);
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (formData !== null) {
       dispatch(postCommentsAction(formData));
-      toast(Messages.AddComment);
     }
   };
 
@@ -33,9 +42,9 @@ function ReviewForm(): JSX.Element {
     setFormData({...formData, [name]: value});
   };
 
-  const isShort = formData.comment.length <= 50;
-  const isLong = formData.comment.length > 300;
-  const isCheck = Number(formData.rating) < 1;
+  const isShort = formData.comment.length <= MIN_LENGTH;
+  const isLong = formData.comment.length > MAX_LENGTH;
+  const isCheck = Number(formData.rating) < MIN_RATING;
 
   return (
     <form
@@ -53,6 +62,7 @@ function ReviewForm(): JSX.Element {
               title={ratingType.title}
               onFieldChange={handleChange}
               key={ratingType.stars}
+              formDataRating={Number(formData.rating)}
             />
           ),
         )}

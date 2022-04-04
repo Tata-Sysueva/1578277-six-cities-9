@@ -46,7 +46,7 @@ function Card(
       {isPremium && <PremiumMark />}
 
       <div className={`${classNameWrap} place-card__image-wrapper`}>
-        <a href="/#">
+        <Link to={`${AppRoute.Room}/${id}`}>
           <img
             className="place-card__image"
             src={images[0]}
@@ -54,7 +54,7 @@ function Card(
             height={height}
             alt={title}
           />
-        </a>
+        </Link>
       </div>
 
       <div className={`${classNameInfo} place-card__info`}>
@@ -74,11 +74,12 @@ function Card(
           </div>
         </div>
 
-        <h2 className="place-card__name">
-          <Link to={`${AppRoute.Room}/${id}`}>
+        <Link to={`${AppRoute.Room}/${id}`}>
+          <h2 className="place-card__name">
             {title}
-          </Link>
-        </h2>
+          </h2>
+        </Link>
+
         <p className="place-card__type">{uppercaseFirstLetter(type)}</p>
       </div>
     </article>

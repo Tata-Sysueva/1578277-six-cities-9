@@ -1,6 +1,6 @@
 import Main from '../../screens/main/main';
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {AppRoute, TIMEOUT_SHOW_ERROR} from '../../const';
 import Favorites from '../../screens/favorites/favorites';
 import SingIn from '../../screens/sign-in/sing-in';
 import Room from '../../screens/room/room';
@@ -9,19 +9,26 @@ import PrivateRoute from '../private-route/private-route';
 import {useAppSelector} from '../../hooks';
 import Loading from '../loading/loading';
 import {isCheckedAuth} from '../../utils/utils';
-import {getLoadedDataStatus, getOffers} from '../../store/load-data/selectors';
+import {getLoadedDataStatus} from '../../store/data/selectors';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import {useState} from 'react';
+import ErrorMessage from '../../screens/error-message/error-massage';
 
 function App(): JSX.Element {
-  const offers = useAppSelector(getOffers);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const isDataLoaded = useAppSelector(getLoadedDataStatus);
+  const isLoadedStatus = useAppSelector(getLoadedDataStatus);
 
+  const [hasTimeElapsed, setHasTimeElapsed] = useState(false);
 
-  if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
-    return (
-      <Loading />
-    );
+  setTimeout(() => {
+    setHasTimeElapsed(true);
+  }, TIMEOUT_SHOW_ERROR);
+
+  if (isCheckedAuth(authorizationStatus) || !isLoadedStatus) {
+    if (hasTimeElapsed) {
+      return <ErrorMessage />;
+    }
+    return <Loading />;
   }
 
   return (
@@ -30,10 +37,7 @@ function App(): JSX.Element {
         <Route
           path={AppRoute.Main}
           element={
-            < Main
-              offers={offers}
-              authorizationStatus={authorizationStatus}
-            />
+            <Main />
           }
         />
         <Route
@@ -46,7 +50,7 @@ function App(): JSX.Element {
             <PrivateRoute
               authorizationStatus={authorizationStatus}
             >
-              <Favorites offers={offers} authorizationStatus={authorizationStatus} />
+              <Favorites />
             </PrivateRoute>
           }
         />

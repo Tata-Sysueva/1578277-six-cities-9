@@ -1,16 +1,16 @@
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
-import {Offer} from '../../types/offer';
 import {mapOffersToCities} from '../../utils/utils';
 import FavoritesLocation from '../../components/favorites-location/favorites-location';
 import FavoritesListEmpty from '../../components/favorites-list-empty/favorites-list-empty';
+import {useAppSelector} from '../../hooks';
+import {getOffers} from '../../store/data/selectors';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
-type FavoritesProps = {
-  offers: Offer[],
-  authorizationStatus: string,
-}
+function Favorites(): JSX.Element {
+  const offers = useAppSelector(getOffers);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
-function Favorites({offers, authorizationStatus}: FavoritesProps): JSX.Element {
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
   const isEmpty = favoriteOffers.length <= 0;
   const groupFavoriteOffers = Object.entries(mapOffersToCities(favoriteOffers));

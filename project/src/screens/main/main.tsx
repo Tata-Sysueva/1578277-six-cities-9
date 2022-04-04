@@ -10,15 +10,28 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {SortTypes} from '../../const';
 import {SortHighToLow, SortLowToHigh, SortTopRated} from '../../utils/utils';
 import {Offer} from '../../types/offer';
-import {changeCity, changeSortType} from '../../store/use-site/use-site';
-import {getCityName, getSortType} from '../../store/use-site/selectors';
+import {changeCity, changeSortType} from '../../store/app/app';
+import {getCityName, getSortType} from '../../store/app/selectors';
+import {getOffers} from '../../store/data/selectors';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
-type MainProps = {
-  offers: Offer[],
-  authorizationStatus: string,
-}
+const sortOffers = (sortType: string, offers: Offer[]) => {
+  switch (sortType) {
+    case SortTypes.HighToLow:
+      return offers.sort(SortHighToLow);
+    case SortTypes.LowToHigh:
+      return offers.sort(SortLowToHigh);
+    case SortTypes.TopRatedFirst:
+      return offers.sort(SortTopRated);
+    default:
+      return offers;
+  }
+};
 
-function Main({offers, authorizationStatus}: MainProps): JSX.Element {
+function Main(): JSX.Element {
+  const [id, setOffersId] = useState(0);
+  const offers = useAppSelector(getOffers);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const cityName = useAppSelector(getCityName);
   const sortType = useAppSelector(getSortType);
   const dispatch = useAppDispatch();
@@ -26,22 +39,7 @@ function Main({offers, authorizationStatus}: MainProps): JSX.Element {
   const currentOffers = offers.filter((offer) => offer.city.name === cityName);
   const isEmpty = currentOffers.length === 0;
 
-  const getSortOffers = () => {
-    switch (sortType) {
-      case SortTypes.HighToLow:
-        return currentOffers.sort(SortHighToLow);
-      case SortTypes.LowToHigh:
-        return currentOffers.sort(SortLowToHigh);
-      case SortTypes.TopRatedFirst:
-        return currentOffers.sort(SortTopRated);
-      default:
-        return currentOffers;
-    }
-  };
-
-  getSortOffers();
-
-  const [id, setOffersId] = useState(0);
+  const sortedOffers = sortOffers(sortType, currentOffers);
 
   const handleMouseEnter = (newId: number) => setOffersId(newId);
 
@@ -53,7 +51,7 @@ function Main({offers, authorizationStatus}: MainProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
 
-      <Header authorizationStatus={authorizationStatus}/>
+      <Header authorizationStatus={authorizationStatus} isAuthorizations />
 
       <main className={`page__main page__main--index ${isEmpty && 'page__main--index-empty'}`}>
         <h1 className="visually-hidden">Cities</h1>
@@ -73,7 +71,7 @@ function Main({offers, authorizationStatus}: MainProps): JSX.Element {
                 <Sort sortTypeCheck={sortType} />
 
                 <CardList
-                  offers={currentOffers}
+                  offers={sortedOffers}
                   onCardHover={handleMouseEnter}
                 />
 
@@ -84,7 +82,7 @@ function Main({offers, authorizationStatus}: MainProps): JSX.Element {
               {!isEmpty &&
                 <Map
                   className="cities__map"
-                  offersInCurrentCity = {currentOffers}
+                  offersInCurrentCity={currentOffers}
                   currentId={id}
                 />}
             </div>
