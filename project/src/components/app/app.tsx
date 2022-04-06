@@ -6,31 +6,15 @@ import SingIn from '../../screens/sign-in/sing-in';
 import Room from '../../screens/room/room';
 import NotFoundScreen from '../../screens/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
-import {useAppSelector} from '../../hooks';
-import Loading from '../loading/loading';
-import {isCheckedAuth} from '../../utils/utils';
 
 function App(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
-
-  const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
-
-  if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
-    return (
-      <Loading />
-    );
-  }
-
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
           element={
-            < Main
-              offers={offers}
-              authorizationStatus={authorizationStatus}
-            />
+            <Main />
           }
         />
         <Route
@@ -40,10 +24,8 @@ function App(): JSX.Element {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute
-              authorizationStatus={authorizationStatus}
-            >
-              <Favorites offers={offers} authorizationStatus={authorizationStatus} />
+            <PrivateRoute>
+              <Favorites />
             </PrivateRoute>
           }
         />
@@ -51,9 +33,7 @@ function App(): JSX.Element {
           <Route
             path=':id'
             element={
-              <Room
-                authorizationStatus={authorizationStatus}
-              />
+              <Room />
             }
           />
         </Route>

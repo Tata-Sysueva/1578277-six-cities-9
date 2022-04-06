@@ -4,9 +4,10 @@ type ReviewRatingProps = {
   stars: number,
   title: string,
   onFieldChange: (evt: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
+  formDataRating: number,
 }
 
-function ReviewRating({stars, title, onFieldChange}: ReviewRatingProps): JSX.Element {
+function ReviewRating({stars, title, onFieldChange, formDataRating}: ReviewRatingProps): JSX.Element {
   return (
     <>
       <input
@@ -16,6 +17,7 @@ function ReviewRating({stars, title, onFieldChange}: ReviewRatingProps): JSX.Ele
         id={`${stars}-stars`}
         type="radio"
         onChange={onFieldChange}
+        checked={formDataRating === stars}
       />
       <label
         htmlFor={`${stars}-stars`}

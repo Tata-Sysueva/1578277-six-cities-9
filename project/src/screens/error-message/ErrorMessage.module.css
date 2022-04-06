@@ -1,0 +1,18 @@
+.section {
+  display: flex;
+  flex-direction: column;
+
+  height: 100vh;
+
+  background-image: url('../../../public/img/not-found.jpg');
+  background-position: center;
+  background-size: cover;
+}
+
+.container {
+  display: block;
+  width: 550px;
+  margin: calc(50vh - 275px) auto;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}

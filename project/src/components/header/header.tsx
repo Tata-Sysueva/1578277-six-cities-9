@@ -3,10 +3,11 @@ import UserNav from '../user-nav/user-nav';
 import {AppRoute} from '../../const';
 
 type HeaderProps = {
-  authorizationStatus: string,
+  authorizationStatus?: string,
+  isAuthorizations?: boolean,
 }
 
-function Header({authorizationStatus}: HeaderProps): JSX.Element {
+function Header({authorizationStatus, isAuthorizations}: HeaderProps): JSX.Element {
   return (
     <header className="header">
       <div className="container">
@@ -26,7 +27,7 @@ function Header({authorizationStatus}: HeaderProps): JSX.Element {
             </Link>
           </div>
 
-          <UserNav authorizationStatus={authorizationStatus} />
+          {isAuthorizations && <UserNav authorizationStatus={authorizationStatus}/>}
 
         </div>
       </div>

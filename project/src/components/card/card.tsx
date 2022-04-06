@@ -23,7 +23,6 @@ function Card(
     classNameInfo='',
     isSmall,
   }: CardProps): JSX.Element {
-
   const {
     id,
     title,
@@ -46,7 +45,7 @@ function Card(
       {isPremium && <PremiumMark />}
 
       <div className={`${classNameWrap} place-card__image-wrapper`}>
-        <a href="/#">
+        <Link to={`${AppRoute.Room}/${id}`}>
           <img
             className="place-card__image"
             src={images[0]}
@@ -54,7 +53,7 @@ function Card(
             height={height}
             alt={title}
           />
-        </a>
+        </Link>
       </div>
 
       <div className={`${classNameInfo} place-card__info`}>
@@ -64,7 +63,8 @@ function Card(
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
-          <ButtonBookmark isFavorite={isFavorite}/>
+          <ButtonBookmark id={id} isFavorite={isFavorite} isSmall />
+
         </div>
 
         <div className="place-card__rating rating">
@@ -74,11 +74,12 @@ function Card(
           </div>
         </div>
 
-        <h2 className="place-card__name">
-          <Link to={`${AppRoute.Room}/${id}`}>
+        <Link to={`${AppRoute.Room}/${id}`}>
+          <h2 className="place-card__name">
             {title}
-          </Link>
-        </h2>
+          </h2>
+        </Link>
+
         <p className="place-card__type">{uppercaseFirstLetter(type)}</p>
       </div>
     </article>

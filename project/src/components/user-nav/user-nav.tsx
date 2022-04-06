@@ -1,33 +1,48 @@
 import {Link} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import {logoutAction} from '../../store/api-actions';
+import {fetchUserInfo, logoutAction} from '../../store/api-actions';
 import {useAppDispatch, useAppSelector} from '../../hooks';
+import {useEffect, useState} from 'react';
+import {getUser} from '../../store/data/selectors';
+import {MouseEvent} from 'react';
 
 type UserNavProps = {
-  authorizationStatus: string,
+  authorizationStatus?: string,
 }
 
 function UserNav({authorizationStatus}: UserNavProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.user);
-  const email = user.email;
+  const user = useAppSelector(getUser);
+  const email = user?.email;
+  const avatarUrl = user?.avatarUrl;
 
-  const handleSingOut = () => {
+  useEffect(() => {
+    dispatch(fetchUserInfo());
+  }, [dispatch, email]);
+
+  const [isLogged, setLogged] = useState(true);
+
+  const handleSingOut = (evt: MouseEvent<HTMLAnchorElement>) => {
+    evt.preventDefault();
     dispatch(logoutAction());
+    setLogged(false);
   };
 
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">
         {
-          authorizationStatus === AuthorizationStatus.Auth ?
+          authorizationStatus === AuthorizationStatus.Auth && isLogged ?
             <>
               <li className="header__nav-item user">
                 <Link
                   className="header__nav-link header__nav-link--profile"
                   to={AppRoute.Favorites}
                 >
-                  <div className="header__avatar-wrapper user__avatar-wrapper" />
+                  <div
+                    className="header__avatar-wrapper user__avatar-wrapper"
+                    style={{backgroundImage: `url(${avatarUrl})`}}
+                  />
                   <span className="header__user-name user__name">{email}</span>
                 </Link>
               </li>
