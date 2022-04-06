@@ -3,15 +3,23 @@ import Header from '../../components/header/header';
 import {mapOffersToCities} from '../../utils/utils';
 import FavoritesLocation from '../../components/favorites-location/favorites-location';
 import FavoritesListEmpty from '../../components/favorites-list-empty/favorites-list-empty';
-import {useAppSelector} from '../../hooks';
-import {getOffers} from '../../store/data/selectors';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {getFavoriteOffers} from '../../store/data/selectors';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import {fetchFavoriteOffers} from '../../store/api-actions';
+import {useEffect} from 'react';
+import {getFavoriteStatus} from '../../store/data/selectors';
 
 function Favorites(): JSX.Element {
-  const offers = useAppSelector(getOffers);
+  const dispatch = useAppDispatch();
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isFavoriteStatus = useAppSelector(getFavoriteStatus);
 
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+  useEffect(() => {
+    dispatch(fetchFavoriteOffers());
+  }, [isFavoriteStatus]);
+
   const isEmpty = favoriteOffers.length <= 0;
   const groupFavoriteOffers = Object.entries(mapOffersToCities(favoriteOffers));
 

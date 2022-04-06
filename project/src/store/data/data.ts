@@ -2,6 +2,7 @@ import {NameSpace} from '../../const';
 import {createSlice} from '@reduxjs/toolkit';
 import {Offer} from '../../types/offer';
 import {ReviewType} from '../../types/review-type';
+import {UserInfo} from '../../types/user-info';
 
 type Data = {
   offers: Offer[],
@@ -10,6 +11,9 @@ type Data = {
   offersNear: Offer[],
   reviews: ReviewType[],
   isDataOfferLoaded: boolean,
+  favorites: Offer [],
+  user: UserInfo | null,
+  isFavoriteStatus: boolean,
 };
 
 const initialState: Data = {
@@ -19,6 +23,9 @@ const initialState: Data = {
   offersNear: [],
   reviews: [],
   isDataOfferLoaded: false,
+  favorites: [],
+  user: null,
+  isFavoriteStatus: false,
 };
 
 export const data = createSlice({
@@ -39,6 +46,20 @@ export const data = createSlice({
     loadReviews: (state, action) => {
       state.reviews = action.payload;
     },
+    loadFavoriteOffers: (state, action) => {
+      state.favorites = action.payload;
+    },
+    loadUserInfo: (state, action) => {
+      state.user = action.payload;
+    },
+    changeFavorite: (state, action) => {
+      const currentOffer = state.offers.find((offer) => offer.id === action.payload.id);
+      if (currentOffer) {
+        currentOffer.isFavorite = !currentOffer.isFavorite;
+      }
+
+      state.isFavoriteStatus = action.payload;
+    },
   },
 });
 
@@ -47,4 +68,7 @@ export const {
   loadOffer,
   loadOffersNear,
   loadReviews,
+  loadFavoriteOffers,
+  loadUserInfo,
+  changeFavorite,
 } = data.actions;

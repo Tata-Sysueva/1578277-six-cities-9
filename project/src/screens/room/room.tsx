@@ -4,33 +4,33 @@ import ReviewForm from '../../components/review-form/review-form';
 import PremiumMark from '../../components/premium-mark/premium-mark';
 import Map from '../../components/map/map';
 import NearPlaces from '../../components/near-places/near-places';
-import Review from '../../components/review/review';
 import {AuthorizationStatus} from '../../const';
 import {getRatingPercent, uppercaseFirstLetter} from '../../utils/utils';
 import RoomGallery from '../../components/room-gallery/room-gallery';
 import pluralize from 'pluralize';
-import {useAppSelector} from '../../hooks';
-import {store} from '../../store';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {useEffect} from 'react';
-import {fetchOfferAction, fetchOffersNearAction, fetchReviews} from '../../store/api-actions';
+import {fetchOfferAction, fetchOffersNearAction} from '../../store/api-actions';
 import Loading from '../../components/loading/loading';
+import ReviewList from '../../components/review-list/review-list';
+import ButtonBookmark from '../../components/button-bookmark/button-bookmark';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import {getIsDataOfferLoaded, getOffer, getOffersNear} from '../../store/data/selectors';
 
-type RoomProps = {
-  authorizationStatus: string,
-};
+function Room(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const offer = useAppSelector(getOffer);
+  const offersNear = useAppSelector(getOffersNear);
+  const isDataOfferLoaded = useAppSelector(getIsDataOfferLoaded);
 
-function Room({authorizationStatus}: RoomProps ): JSX.Element {
-  const {offer, offersNear, reviews, isDataOfferLoaded} = useAppSelector(({DATA}) => DATA);
-
-  const params = useParams();
-  const paramsId = params.id;
-  const cardId = Number(paramsId);
+  const { id: offerId } = useParams<{ id:string}>();
+  const cardId = Number(offerId);
 
   useEffect(() => {
-    store.dispatch(fetchOfferAction(cardId));
-    store.dispatch(fetchOffersNearAction(cardId));
-    store.dispatch(fetchReviews(cardId));
-  }, [cardId, reviews]);
+    dispatch(fetchOfferAction(cardId));
+    dispatch(fetchOffersNearAction(cardId));
+  }, [dispatch, cardId]);
 
   if (!offer || !isDataOfferLoaded) {
     return (
@@ -51,6 +51,7 @@ function Room({authorizationStatus}: RoomProps ): JSX.Element {
     host,
     isPremium,
     images,
+    isFavorite,
   } = offer;
 
   const {
@@ -75,12 +76,9 @@ function Room({authorizationStatus}: RoomProps ): JSX.Element {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
-                  <svg className="property__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark" />
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+
+                <ButtonBookmark id={id} isFavorite={isFavorite} isRoom/>
+
               </div>
 
               <div className="property__rating rating">
@@ -149,13 +147,7 @@ function Room({authorizationStatus}: RoomProps ): JSX.Element {
               </div>
 
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">
-                  Reviews &middot;
-                  <span className="reviews__amount">{reviews.length}</span>
-                </h2>
-                <ul className="reviews__list">
-                  {reviews.map((review) => <Review key={review.id} review={review}/>)}
-                </ul>
+                <ReviewList cardId={cardId} />
 
                 {authorizationStatus === AuthorizationStatus.Auth ? <ReviewForm cardId={cardId} /> : '' }
 

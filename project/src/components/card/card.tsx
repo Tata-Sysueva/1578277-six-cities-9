@@ -23,7 +23,6 @@ function Card(
     classNameInfo='',
     isSmall,
   }: CardProps): JSX.Element {
-
   const {
     id,
     title,
@@ -64,7 +63,8 @@ function Card(
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
-          <ButtonBookmark isFavorite={isFavorite}/>
+          <ButtonBookmark id={id} isFavorite={isFavorite} isSmall />
+
         </div>
 
         <div className="place-card__rating rating">

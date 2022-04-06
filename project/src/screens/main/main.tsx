@@ -7,13 +7,15 @@ import MainEmpty from '../../components/main-empty/main-empty';
 import pluralize from 'pluralize';
 import {useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {SortTypes} from '../../const';
-import {SortHighToLow, SortLowToHigh, SortTopRated} from '../../utils/utils';
+import {SortTypes, TIMEOUT_SHOW_ERROR} from '../../const';
+import {isCheckedAuth, SortHighToLow, SortLowToHigh, SortTopRated} from '../../utils/utils';
 import {Offer} from '../../types/offer';
 import {changeCity, changeSortType} from '../../store/app/app';
 import {getCityName, getSortType} from '../../store/app/selectors';
-import {getOffers} from '../../store/data/selectors';
+import {getLoadedDataStatus, getOffers} from '../../store/data/selectors';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import ErrorMessage from '../error-message/error-massage';
+import Loading from '../../components/loading/loading';
 
 const sortOffers = (sortType: string, offers: Offer[]) => {
   switch (sortType) {
@@ -29,12 +31,26 @@ const sortOffers = (sortType: string, offers: Offer[]) => {
 };
 
 function Main(): JSX.Element {
+  const dispatch = useAppDispatch();
   const [id, setOffersId] = useState(0);
   const offers = useAppSelector(getOffers);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const cityName = useAppSelector(getCityName);
   const sortType = useAppSelector(getSortType);
-  const dispatch = useAppDispatch();
+  const isLoadedStatus = useAppSelector(getLoadedDataStatus);
+
+  const [hasTimeElapsed, setHasTimeElapsed] = useState(false);
+
+  setTimeout(() => {
+    setHasTimeElapsed(true);
+  }, TIMEOUT_SHOW_ERROR);
+
+  if (isCheckedAuth(authorizationStatus) || !isLoadedStatus) {
+    if (hasTimeElapsed) {
+      return <ErrorMessage />;
+    }
+    return <Loading />;
+  }
 
   const currentOffers = offers.filter((offer) => offer.city.name === cityName);
   const isEmpty = currentOffers.length === 0;

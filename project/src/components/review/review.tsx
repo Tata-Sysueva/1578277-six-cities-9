@@ -1,5 +1,6 @@
 import {ReviewType} from '../../types/review-type';
 import {getRatingPercent} from '../../utils/utils';
+import moment from 'moment';
 
 type CommentProps = {
   review: ReviewType;
@@ -17,6 +18,8 @@ function Review({review}: CommentProps):JSX.Element {
     avatarUrl,
     name,
   } = user;
+
+  const dateReview = moment(date).format('MMMM YYYY');
 
   return (
     <li className="reviews__item">
@@ -42,7 +45,7 @@ function Review({review}: CommentProps):JSX.Element {
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">{date}</time>
+        <time className="reviews__time" dateTime={date}>{dateReview}</time>
       </div>
     </li>
   );

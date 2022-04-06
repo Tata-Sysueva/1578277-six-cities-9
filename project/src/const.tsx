@@ -1,5 +1,12 @@
-export const OFFERS_FROM = 0;
+export const FROM = 0;
 export const OFFERS_TO = 3;
+export const REVIEWS_TO = 10;
+export const IMG_TO = 6;
+
+export const MAX_LENGTH = 300;
+export const MIN_LENGTH = 50;
+export const MIN_RATING = 1;
+
 export const TIMEOUT_SHOW_ERROR = 5000;
 
 export const LAYER_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
@@ -9,10 +16,6 @@ export const URL_MARKER_CURRENT = 'img/pin-active.svg';
 
 export const PASSWORD_PATTERN = /^(?=.*[0-9])(?=.*[a-z])/i;
 export const EMAIL_PATTERN = /^[A-Za-z0-9][A-Za-z0-9-_]*[A-Za-z0-9]*@([A-Za-z0-9]+([A-Za-z0-9-]*[A-Za-z0-9]+)*\.)+[A-Za-z]*$/;
-
-export const MAX_LENGTH = 300;
-export const MIN_LENGTH = 50;
-export const MIN_RATING = 1;
 
 export const RATING_TYPES = [
   {
@@ -75,20 +78,19 @@ export const SORT_TYPES = [
   'Top rated first',
 ];
 
-export const SortTypes = {
-  Popular: 'Popular',
-  LowToHigh: 'Price: low to high',
-  HighToLow: 'Price: high to low',
-  TopRatedFirst: 'Top rated first',
-};
+export enum SortTypes {
+  Popular = 'Popular',
+  LowToHigh = 'Price: low to high',
+  HighToLow = 'Price: high to low',
+  TopRatedFirst = 'Top rated first',
+}
 
 export enum APIRoute {
-  Offers = '/hotels',
+  Offers = '/hotels/',
   Login = '/login',
   Logout = '/logout',
-  Offer = '/hotels/',
   Comments = '/comments/',
-  Favorites = '/favorite',
+  Favorites = '/favorite/',
 }
 
 export const HTTP_CODE = {
@@ -108,4 +110,18 @@ export enum NameSpace {
   Data = 'DATA',
   App = 'APP',
   User = 'USER',
+}
+
+export enum ApiAction {
+  FetchOffers = 'data/fetchOffers',
+  FetchOffer = 'data/fetchOffer',
+  FetchOffersNear = 'data/fetchOffersNear',
+  FetchReviews = 'data/fetchReviews',
+  FetchFavoriteOffers = 'data/fetchFavoriteOffers',
+  UserCheckAuth = 'user/checkAuth',
+  UserLogin = 'user/login',
+  UserLogout = 'user/logout',
+  AddComment = 'addComment',
+  ChangeFavoriteStatus = 'changeFavoriteStatus',
+
 }

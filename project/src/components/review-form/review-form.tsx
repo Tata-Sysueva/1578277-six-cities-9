@@ -4,6 +4,7 @@ import ReviewRating from '../review-rating/review-rating';
 import {postCommentsAction} from '../../store/api-actions';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {getPostSuccess} from '../../store/app/selectors';
+import {isPostSuccess} from '../../store/app/app';
 
 type ReviewFormProps = {
   cardId: number,
@@ -11,29 +12,28 @@ type ReviewFormProps = {
 
 function ReviewForm({ cardId }: ReviewFormProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const isPostSuccess = useAppSelector(getPostSuccess);
+  const isCommentSuccess = useAppSelector(getPostSuccess);
 
   const [formData, setFormData] = useState({
     comment: '',
     rating: 0,
-    id: cardId,
   });
 
-  const resetForm = () => {
-    setFormData({
-      ...formData,
-      comment: '',
-      rating: 0,
-    });
-  };
-
-  useEffect(resetForm, [isPostSuccess]);
+  useEffect(() => {
+    if (isCommentSuccess) {
+      dispatch(isPostSuccess(false));
+      setFormData({
+        comment: '',
+        rating: 0,
+      });
+    }
+  }, [isCommentSuccess]);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (formData !== null) {
-      dispatch(postCommentsAction(formData));
+      dispatch(postCommentsAction({...formData, id: cardId}));
     }
   };
 
