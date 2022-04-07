@@ -1,6 +1,6 @@
 import {ReviewType} from '../../types/review-type';
 import {getRatingPercent} from '../../utils/utils';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 type CommentProps = {
   review: ReviewType;
@@ -19,7 +19,7 @@ function Review({review}: CommentProps):JSX.Element {
     name,
   } = user;
 
-  const dateReview = moment(date).format('MMMM YYYY');
+  const dateReview = dayjs(date).format('MMMM YYYY');
 
   return (
     <li className="reviews__item">

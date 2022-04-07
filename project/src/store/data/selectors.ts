@@ -13,3 +13,5 @@ export const getOffersNear = (state: State): Offer[] => state[NameSpace.Data].of
 export const getIsDataOfferLoaded = (state: State): boolean => state[NameSpace.Data].isDataOfferLoaded;
 export const getUser = (state: State): UserInfo | null => state[NameSpace.Data].user;
 export const getFavoriteStatus = (state: State): boolean => state[NameSpace.Data].isFavoriteStatus;
+export const getFavoritesLoaded = (state: State): boolean => state[NameSpace.Data].isFavoritesLoaded;
+

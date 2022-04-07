@@ -17,7 +17,7 @@ import {
   loadReviews,
   loadUserInfo
 } from './data/data';
-import {changeUser, requireAuthorization} from './user-process/user-process';
+import {requireAuthorization} from './user-process/user-process';
 import {addComment, isPostSuccess} from './app/app';
 import {FavoriteStatus} from '../types/favorite-status';
 
@@ -81,23 +81,12 @@ export const fetchFavoriteOffers = createAsyncThunk(
   },
 );
 
-export const fetchUserInfo = createAsyncThunk(
-  ApiAction.UserLogin,
-  async () => {
-    try {
-      const {data} = await api.get<UserData>(APIRoute.Login);
-      store.dispatch(loadUserInfo(data));
-    } catch (error) {
-      errorHandle(error);
-    }
-  },
-);
-
 export const checkAuthAction = createAsyncThunk(
   ApiAction.UserCheckAuth,
   async () => {
     try {
-      await api.get(APIRoute.Login);
+      const {data} = await api.get(APIRoute.Login);
+      store.dispatch(loadUserInfo(data));
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch(error) {
       errorHandle(error);
@@ -112,7 +101,7 @@ export const loginAction = createAsyncThunk(
     try {
       const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
       saveToken(data.token);
-      store.dispatch(changeUser(data));
+      store.dispatch(loadUserInfo(data));
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch (error) {
       errorHandle(error);
@@ -127,7 +116,7 @@ export const logoutAction = createAsyncThunk(
     try {
       await api.delete(APIRoute.Logout);
       dropToken();
-      store.dispatch(changeUser({}));
+      store.dispatch(loadUserInfo({}));
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     } catch (error) {
       errorHandle(error);
