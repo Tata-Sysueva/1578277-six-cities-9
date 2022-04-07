@@ -1,8 +1,7 @@
 import {Link} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import {fetchUserInfo, logoutAction} from '../../store/api-actions';
+import {logoutAction} from '../../store/api-actions';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {useEffect, useState} from 'react';
 import {getUser} from '../../store/data/selectors';
 import {MouseEvent} from 'react';
 
@@ -16,23 +15,16 @@ function UserNav({authorizationStatus}: UserNavProps): JSX.Element {
   const email = user?.email;
   const avatarUrl = user?.avatarUrl;
 
-  useEffect(() => {
-    dispatch(fetchUserInfo());
-  }, [dispatch, email]);
-
-  const [isLogged, setLogged] = useState(true);
-
   const handleSingOut = (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault();
     dispatch(logoutAction());
-    setLogged(false);
   };
 
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">
         {
-          authorizationStatus === AuthorizationStatus.Auth && isLogged ?
+          authorizationStatus === AuthorizationStatus.Auth ?
             <>
               <li className="header__nav-item user">
                 <Link
@@ -41,7 +33,7 @@ function UserNav({authorizationStatus}: UserNavProps): JSX.Element {
                 >
                   <div
                     className="header__avatar-wrapper user__avatar-wrapper"
-                    style={{backgroundImage: `url(${avatarUrl})`}}
+                    style={{backgroundImage: `url(${avatarUrl})`, borderRadius: '50%'}}
                   />
                   <span className="header__user-name user__name">{email}</span>
                 </Link>

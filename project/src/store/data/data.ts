@@ -14,6 +14,7 @@ type Data = {
   favorites: Offer [],
   user: UserInfo | null,
   isFavoriteStatus: boolean,
+  isFavoritesLoaded: boolean,
 };
 
 const initialState: Data = {
@@ -26,6 +27,7 @@ const initialState: Data = {
   favorites: [],
   user: null,
   isFavoriteStatus: false,
+  isFavoritesLoaded: false,
 };
 
 export const data = createSlice({
@@ -48,14 +50,25 @@ export const data = createSlice({
     },
     loadFavoriteOffers: (state, action) => {
       state.favorites = action.payload;
+      state.isFavoritesLoaded = true;
     },
     loadUserInfo: (state, action) => {
       state.user = action.payload;
     },
     changeFavorite: (state, action) => {
-      const currentOffer = state.offers.find((offer) => offer.id === action.payload.id);
-      if (currentOffer) {
-        currentOffer.isFavorite = !currentOffer.isFavorite;
+      const indexOffer = state.offers.findIndex((offer) => offer.id === action.payload.id);
+      const indexOfferNear = state.offersNear.findIndex((offer) => offer.id === action.payload.id);
+
+      if (indexOffer !== -1) {
+        state.offers[indexOffer].isFavorite = !state.offers[indexOffer].isFavorite;
+      }
+
+      if(state.offer && state.offer.id === action.payload.id) {
+        state.offer.isFavorite = !state.offer.isFavorite;
+      }
+
+      if (indexOfferNear !== -1) {
+        state.offersNear[indexOfferNear].isFavorite = !state.offersNear[indexOfferNear].isFavorite;
       }
 
       state.isFavoriteStatus = action.payload;

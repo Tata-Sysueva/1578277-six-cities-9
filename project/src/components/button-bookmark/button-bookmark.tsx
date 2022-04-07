@@ -1,10 +1,8 @@
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {setFavoriteAction} from '../../store/api-actions';
-import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {store} from '../../store';
 import classNames from 'classnames';
-import {useAppSelector} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
 type ButtonBookmarkProps = {
@@ -15,16 +13,16 @@ type ButtonBookmarkProps = {
 }
 
 function ButtonBookmark({id, isFavorite, isRoom, isSmall}: ButtonBookmarkProps): JSX.Element {
-  const [favoriteStatus, setFavoriteStatus] = useState(isFavorite);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const buttonClasses = classNames(
     'button',
     {'property__bookmark-button': isRoom},
-    {'property__bookmark-button--active': favoriteStatus && isRoom},
+    {'property__bookmark-button--active': isFavorite && isRoom},
     {'place-card__bookmark-button': !isRoom},
-    {'place-card__bookmark-button--active': favoriteStatus && !isRoom},
+    {'place-card__bookmark-button--active': isFavorite && !isRoom},
   );
 
   const iconClasses = classNames(
@@ -37,8 +35,7 @@ function ButtonBookmark({id, isFavorite, isRoom, isSmall}: ButtonBookmarkProps):
 
   const handleFavoriteClick = () => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
-      setFavoriteStatus(!favoriteStatus);
-      store.dispatch(setFavoriteAction({cardId: id, status: Number(!favoriteStatus)}));
+      dispatch(setFavoriteAction({cardId: id, status: Number(!isFavorite)}));
     } else {
       navigate(AppRoute.SignIn);
     }
