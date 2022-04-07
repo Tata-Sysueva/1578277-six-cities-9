@@ -1,6 +1,4 @@
 {
   "devDependencies": {
-    "datejs": "1.0.0-rc3",
-    "pluralize": "^8.0.0"
   }
 }
