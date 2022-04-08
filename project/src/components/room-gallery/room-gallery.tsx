@@ -1,4 +1,4 @@
-import {FROM, IMG_TO} from '../../const';
+import {IMG_TO, ZERO} from '../../const';
 
 type RoomGalleryProps = {
   imagesSrc: string[],
@@ -9,7 +9,7 @@ function RoomGallery({imagesSrc}: RoomGalleryProps): JSX.Element {
     <div className="property__gallery-container container">
       <div className="property__gallery">
         {imagesSrc
-          .slice(FROM, IMG_TO)
+          .slice(ZERO, IMG_TO)
           .map((imageSrc) =>
             (
               <div className="property__image-wrapper" key={imageSrc}>

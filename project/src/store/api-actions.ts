@@ -97,7 +97,7 @@ export const checkAuthAction = createAsyncThunk(
 
 export const loginAction = createAsyncThunk(
   ApiAction.UserLogin,
-  async ({email: email, password}: AuthData) => {
+  async ({email, password}: AuthData) => {
     try {
       const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
       saveToken(data.token);
@@ -126,7 +126,7 @@ export const logoutAction = createAsyncThunk(
 
 export const postCommentsAction = createAsyncThunk(
   ApiAction.AddComment,
-  async ({comment: comment, rating, id}: CommentInfo) => {
+  async ({comment, rating, id}: CommentInfo) => {
     try {
       const {data} = await api.post<CommentInfo>(`${APIRoute.Comments}${id}`, {comment, rating});
       store.dispatch(addComment(data));

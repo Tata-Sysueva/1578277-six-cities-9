@@ -1,21 +1,31 @@
 export const FROM = 0;
+export const ZERO = 0;
 export const OFFERS_TO = 3;
 export const REVIEWS_TO = 10;
 export const IMG_TO = 6;
-
-export const MAX_LENGTH = 300;
-export const MIN_LENGTH = 50;
-export const MIN_RATING = 1;
 
 export const TIMEOUT_SHOW_ERROR = 5000;
 
 export const LAYER_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
 export const COPYRIGHT_MAP = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
-export const URL_MARKER_DEFAULT = 'img/pin.svg';
-export const URL_MARKER_CURRENT = 'img/pin-active.svg';
 
-export const PASSWORD_PATTERN = /^(?=.*[0-9])(?=.*[a-z])/i;
-export const EMAIL_PATTERN = /^[A-Za-z0-9][A-Za-z0-9-_]*[A-Za-z0-9]*@([A-Za-z0-9]+([A-Za-z0-9-]*[A-Za-z0-9]+)*\.)+[A-Za-z]*$/;
+export const PATTERNS = {
+  PASSWORD_PATTERN: /^(?=.*[0-9])(?=.*[a-z])/i,
+  EMAIL_PATTERN: /^[A-Za-z0-9][A-Za-z0-9-_]*[A-Za-z0-9]*@([A-Za-z0-9]+([A-Za-z0-9-]*[A-Za-z0-9]+)*\.)+[A-Za-z]*$/,
+};
+
+export const HTTP_CODE = {
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  NOT_FOUND: 404,
+};
+
+export const SORT_TYPES = [
+  'Popular',
+  'Price: low to high',
+  'Price: high to low',
+  'Top rated first',
+];
 
 export const RATING_TYPES = [
   {
@@ -49,6 +59,17 @@ export const CITIES = [
   'Dusseldorf',
 ];
 
+export enum ReviewValues {
+  MaxLength = 300,
+  MinLength = 50,
+  MinRating = 1,
+}
+
+export enum Markers {
+  DefaultUrl= 'img/pin.svg',
+  CurrentUrl = 'img/pin-active.svg',
+}
+
 export enum Cities {
   Paris = 'Paris',
   Cologne = 'Cologne',
@@ -71,13 +92,6 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export const SORT_TYPES = [
-  'Popular',
-  'Price: low to high',
-  'Price: high to low',
-  'Top rated first',
-];
-
 export enum SortTypes {
   Popular = 'Popular',
   LowToHigh = 'Price: low to high',
@@ -92,12 +106,6 @@ export enum APIRoute {
   Comments = '/comments/',
   Favorites = '/favorite/',
 }
-
-export const HTTP_CODE = {
-  BAD_REQUEST: 400,
-  UNAUTHORIZED: 401,
-  NOT_FOUND: 404,
-};
 
 export enum Messages {
   LoggedIn = 'You have successfully logged in!',
@@ -123,5 +131,18 @@ export enum ApiAction {
   UserLogout = 'user/logout',
   AddComment = 'addComment',
   ChangeFavoriteStatus = 'changeFavoriteStatus',
+}
 
+export enum SizesButton {
+  WidthIsSmall = '18',
+  WidthIsBig = '31',
+  HeightIsSmall = '19',
+  HeightIsBig = '33',
+}
+
+export enum SizesCard {
+  WidthIsSmall = '150',
+  WidthIsBig = '260',
+  HeightIsSmall = '110',
+  HeightIsBig = '200',
 }

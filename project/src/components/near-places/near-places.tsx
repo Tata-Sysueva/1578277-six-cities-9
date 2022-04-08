@@ -1,6 +1,6 @@
 import {Offer} from '../../types/offer';
 import Card from '../card/card';
-import {FROM, OFFERS_TO} from '../../const';
+import {OFFERS_TO, ZERO} from '../../const';
 
 type NearPlacesProps = {
   offersNear: Offer[];
@@ -14,7 +14,7 @@ export default function NearPlaces({offersNear}: NearPlacesProps): JSX.Element {
         <div className="near-places__list places__list">
           {
             offersNear
-              .slice(FROM,OFFERS_TO)
+              .slice(ZERO,OFFERS_TO)
               .map((offer: Offer) => (
                 <Card
                   key={offer.id}

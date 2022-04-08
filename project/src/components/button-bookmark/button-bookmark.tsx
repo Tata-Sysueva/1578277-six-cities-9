@@ -1,4 +1,4 @@
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute, AuthorizationStatus, SizesButton} from '../../const';
 import {setFavoriteAction} from '../../store/api-actions';
 import {useNavigate} from 'react-router-dom';
 import classNames from 'classnames';
@@ -30,8 +30,8 @@ function ButtonBookmark({id, isFavorite, isRoom, isSmall}: ButtonBookmarkProps):
     {'property__bookmark-icon': isRoom},
   );
 
-  const width = isSmall ? '18' : '31';
-  const height = isSmall ? '19' : '33';
+  const width = isSmall ? SizesButton.WidthIsSmall : SizesButton.WidthIsBig;
+  const height = isSmall ? SizesButton.HeightIsSmall : SizesButton.HeightIsBig;
 
   const handleFavoriteClick = () => {
     if (authorizationStatus === AuthorizationStatus.Auth) {

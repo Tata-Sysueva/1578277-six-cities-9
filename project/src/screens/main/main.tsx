@@ -5,9 +5,9 @@ import CardList from '../../components/card-list/card-list';
 import Map from '../../components/map/map';
 import MainEmpty from '../../components/main-empty/main-empty';
 import pluralize from 'pluralize';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {SortTypes, TIMEOUT_SHOW_ERROR} from '../../const';
+import {AuthorizationStatus, SortTypes, TIMEOUT_SHOW_ERROR, ZERO} from '../../const';
 import {isCheckedAuth, SortHighToLow, SortLowToHigh, SortTopRated} from '../../utils/utils';
 import {Offer} from '../../types/offer';
 import {changeCity, changeSortType} from '../../store/app/app';
@@ -16,6 +16,7 @@ import {getLoadedDataStatus, getOffers} from '../../store/data/selectors';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
 import ErrorMessage from '../error-message/error-massage';
 import Loading from '../../components/loading/loading';
+import {fetchOffersAction} from '../../store/api-actions';
 
 const sortOffers = (sortType: string, offers: Offer[]) => {
   switch (sortType) {
@@ -39,6 +40,12 @@ function Main(): JSX.Element {
   const sortType = useAppSelector(getSortType);
   const isLoadedStatus = useAppSelector(getLoadedDataStatus);
 
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.NoAuth) {
+      dispatch(fetchOffersAction());
+    }
+  }, [dispatch, authorizationStatus]);
+
   const [hasTimeElapsed, setHasTimeElapsed] = useState(false);
 
   setTimeout(() => {
@@ -53,7 +60,7 @@ function Main(): JSX.Element {
   }
 
   const currentOffers = offers.filter((offer) => offer.city.name === cityName);
-  const isEmpty = currentOffers.length === 0;
+  const isEmpty = currentOffers.length === ZERO;
 
   const sortedOffers = sortOffers(sortType, currentOffers);
 

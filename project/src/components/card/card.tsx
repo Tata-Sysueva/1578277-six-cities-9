@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 import ButtonBookmark from '../button-bookmark/button-bookmark';
-import {AppRoute} from '../../const';
+import {AppRoute, SizesCard} from '../../const';
 import {Offer} from '../../types/offer';
 import {getRatingPercent, uppercaseFirstLetter} from '../../utils/utils';
 import PremiumMark from '../premium-mark/premium-mark';
@@ -34,8 +34,8 @@ function Card(
     isPremium,
   } = offer;
 
-  const width = isSmall ? '150' : '260';
-  const height = isSmall ? '110' : '200';
+  const width = isSmall ? SizesCard.WidthIsSmall : SizesCard.WidthIsBig;
+  const height = isSmall ? SizesCard.HeightIsSmall : SizesCard.HeightIsBig;
 
   return (
     <article

@@ -2,7 +2,7 @@ import {useEffect, useRef} from 'react';
 import {Offer} from '../../types/offer';
 import useMap from '../../hooks/use-map';
 import {Icon, layerGroup, Marker} from 'leaflet';
-import {URL_MARKER_CURRENT, URL_MARKER_DEFAULT} from '../../const';
+import {Markers} from '../../const';
 import 'leaflet/dist/leaflet.css';
 
 type MapProps = {
@@ -16,19 +16,19 @@ function Map({className='', offersInCurrentCity, currentId}: MapProps): JSX.Elem
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
-  const defaultCustomIcon = new Icon({
-    iconUrl: URL_MARKER_DEFAULT,
-    iconSize: [27, 39],
-    iconAnchor: [13, 39],
-  });
-
-  const currentCustomIcon = new Icon({
-    iconUrl: URL_MARKER_CURRENT,
-    iconSize: [27, 39],
-    iconAnchor: [13, 39],
-  });
-
   useEffect(() => {
+    const defaultCustomIcon = new Icon({
+      iconUrl: Markers.DefaultUrl,
+      iconSize: [27, 39],
+      iconAnchor: [13, 39],
+    });
+
+    const currentCustomIcon = new Icon({
+      iconUrl: Markers.CurrentUrl,
+      iconSize: [27, 39],
+      iconAnchor: [13, 39],
+    });
+
     const markerGroup = layerGroup();
 
     if (map) {
@@ -57,7 +57,7 @@ function Map({className='', offersInCurrentCity, currentId}: MapProps): JSX.Elem
     return () => {
       markerGroup.clearLayers();
     };
-  }, [map, offersInCurrentCity, currentId]);
+  }, [map, offersInCurrentCity, currentId, city.location.latitude, city.location.longitude]);
 
   return (
     <section

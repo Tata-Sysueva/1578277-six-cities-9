@@ -10,6 +10,7 @@ import {fetchFavoriteOffers} from '../../store/api-actions';
 import {useEffect} from 'react';
 import {getFavoriteStatus} from '../../store/data/selectors';
 import Loading from '../../components/loading/loading';
+import {ZERO} from '../../const';
 
 function Favorites(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -20,13 +21,13 @@ function Favorites(): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchFavoriteOffers());
-  }, [isFavoriteStatus]);
+  }, [dispatch, isFavoriteStatus]);
 
   if (!favoriteOffers || !isFavoritesLoaded) {
     return <Loading />;
   }
 
-  const isEmpty = favoriteOffers.length <= 0;
+  const isEmpty = favoriteOffers.length <= ZERO;
   const groupFavoriteOffers = Object.entries(mapOffersToCities(favoriteOffers));
 
   return (

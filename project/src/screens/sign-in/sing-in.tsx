@@ -1,10 +1,12 @@
-import {Navigate} from 'react-router-dom';
-import {AppRoute, EMAIL_PATTERN, Messages, PASSWORD_PATTERN} from '../../const';
+import {Link, Navigate} from 'react-router-dom';
+import {AppRoute, CITIES, Messages, PATTERNS} from '../../const';
 import {FormEvent, useRef, useState} from 'react';
 import {useAppDispatch} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
 import {toast} from 'react-toastify';
 import Header from '../../components/header/header';
+import {changeCity} from '../../store/app/app';
+import {getRandomArrayElement} from '../../utils/utils';
 
 function SingIn(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -36,7 +38,7 @@ function SingIn(): JSX.Element {
 
   const handleEmailChange = () => {
     if (emailRef.current !== null) {
-      if (EMAIL_PATTERN.test(emailRef.current.value)) {
+      if (PATTERNS.EMAIL_PATTERN.test(emailRef.current.value)) {
         emailRef.current.setCustomValidity('');
         setEmailValidity(false);
       } else {
@@ -48,7 +50,7 @@ function SingIn(): JSX.Element {
 
   const handlePasswordChange = () => {
     if (passwordRef.current !== null) {
-      if (PASSWORD_PATTERN.test(passwordRef.current.value)) {
+      if (PATTERNS.PASSWORD_PATTERN.test(passwordRef.current.value)) {
         passwordRef.current.setCustomValidity('');
         setPasswordValidity(false);
       } else {
@@ -56,6 +58,12 @@ function SingIn(): JSX.Element {
       }
       passwordRef.current.reportValidity();
     }
+  };
+
+  const randomCity = getRandomArrayElement(CITIES);
+
+  const handleCity = () => {
+    dispatch(changeCity(randomCity));
   };
 
   return  (
@@ -111,9 +119,9 @@ function SingIn(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="/#">
-                <span>Amsterdam</span>
-              </a>
+              <Link className="locations__item-link" to={AppRoute.Main} onClick={handleCity}>
+                <span>{randomCity}</span>
+              </Link>
             </div>
           </section>
         </div>

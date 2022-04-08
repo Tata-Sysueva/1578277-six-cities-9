@@ -1,5 +1,5 @@
 import {ChangeEvent, FormEvent, useEffect, useState} from 'react';
-import {MAX_LENGTH, MIN_LENGTH, MIN_RATING, RATING_TYPES} from '../../const';
+import {RATING_TYPES, ReviewValues, ZERO} from '../../const';
 import ReviewRating from '../review-rating/review-rating';
 import {postCommentsAction} from '../../store/api-actions';
 import {useAppDispatch, useAppSelector} from '../../hooks';
@@ -16,7 +16,7 @@ function ReviewForm({ cardId }: ReviewFormProps): JSX.Element {
 
   const [formData, setFormData] = useState({
     comment: '',
-    rating: 0,
+    rating: ZERO,
   });
 
   useEffect(() => {
@@ -24,10 +24,10 @@ function ReviewForm({ cardId }: ReviewFormProps): JSX.Element {
       dispatch(isPostSuccess(false));
       setFormData({
         comment: '',
-        rating: 0,
+        rating: ZERO,
       });
     }
-  }, [isCommentSuccess]);
+  }, [dispatch, isCommentSuccess]);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -42,9 +42,9 @@ function ReviewForm({ cardId }: ReviewFormProps): JSX.Element {
     setFormData({...formData, [name]: value});
   };
 
-  const isShort = formData.comment.length <= MIN_LENGTH;
-  const isLong = formData.comment.length > MAX_LENGTH;
-  const isCheck = Number(formData.rating) < MIN_RATING;
+  const isShort = formData.comment.length <= ReviewValues.MinLength;
+  const isLong = formData.comment.length > ReviewValues.MaxLength;
+  const isCheck = Number(formData.rating) < ReviewValues.MinRating;
 
   return (
     <form

@@ -1,6 +1,8 @@
 import {Offer} from '../types/offer';
 import {AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../const';
 import {toast} from 'react-toastify';
+import {ReviewType} from '../types/review-type';
+import dayjs from 'dayjs';
 
 export const getRatingPercent = (rating: number): number =>  Math.round((rating * 100)/5);
 
@@ -34,3 +36,23 @@ export const toastConfig = () => {
     draggable: true,
   });
 };
+
+export const sortedReviews = (reviewsArray:ReviewType[]) => {
+  const copiedReviews = reviewsArray.slice();
+
+  if(copiedReviews.length > 0){
+    copiedReviews.sort((a,b) => +dayjs(b.date) - +dayjs(a.date));
+  }
+
+  return copiedReviews;
+};
+
+const getInteger = (min: number, max: number) => {
+  if (min > max || min < 0) {
+    throw new Error('Неправильный диапазон!');
+  }
+
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+export const getRandomArrayElement = (elements: string[]) => elements[getInteger(0, elements.length - 1)];
