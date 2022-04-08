@@ -40,12 +40,6 @@ function Main(): JSX.Element {
   const sortType = useAppSelector(getSortType);
   const isLoadedStatus = useAppSelector(getLoadedDataStatus);
 
-  useEffect(() => {
-    if (authorizationStatus === AuthorizationStatus.NoAuth) {
-      dispatch(fetchOffersAction());
-    }
-  }, [dispatch, authorizationStatus]);
-
   const [hasTimeElapsed, setHasTimeElapsed] = useState(false);
 
   setTimeout(() => {
