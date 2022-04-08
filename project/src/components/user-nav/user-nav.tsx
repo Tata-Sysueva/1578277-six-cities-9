@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import {fetchOffersAction, logoutAction} from '../../store/api-actions';
+import {logoutAction} from '../../store/api-actions';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {getUser} from '../../store/data/selectors';
 import {MouseEvent} from 'react';

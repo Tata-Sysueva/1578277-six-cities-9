@@ -5,9 +5,9 @@ import CardList from '../../components/card-list/card-list';
 import Map from '../../components/map/map';
 import MainEmpty from '../../components/main-empty/main-empty';
 import pluralize from 'pluralize';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {AuthorizationStatus, SortTypes, TIMEOUT_SHOW_ERROR, ZERO} from '../../const';
+import {SortTypes, TIMEOUT_SHOW_ERROR, ZERO} from '../../const';
 import {isCheckedAuth, SortHighToLow, SortLowToHigh, SortTopRated} from '../../utils/utils';
 import {Offer} from '../../types/offer';
 import {changeCity, changeSortType} from '../../store/app/app';
@@ -16,7 +16,6 @@ import {getLoadedDataStatus, getOffers} from '../../store/data/selectors';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
 import ErrorMessage from '../error-message/error-massage';
 import Loading from '../../components/loading/loading';
-import {fetchOffersAction} from '../../store/api-actions';
 
 const sortOffers = (sortType: string, offers: Offer[]) => {
   switch (sortType) {
